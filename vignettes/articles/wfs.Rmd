@@ -57,8 +57,8 @@ basemap <- berlin_bezirke %>%
                        fill = TRUE) %>% 
   leaflet::addLegend(
     position = "topright",
-    colors = rainbow(n = length(shape_pt$namgem)),
-    labels = shape_pt$namgem,
+    colors = rainbow(n = length(berlin_bezirke$namgem)),
+    labels = berlin_bezirke$namgem,
     title = "Berliner Bezirke")
 
 basemap
