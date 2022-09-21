@@ -1,5 +1,5 @@
 ---
-title: "Get WFS Datasets"
+title: "Get WFS Dataset"
 ---
 
 ```{r, include = FALSE}
@@ -9,14 +9,19 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+## Import
+
+```{r import}
 library(kwb.fisbroker)
 
 berlin_bezirke <- kwb.fisbroker::get_wfs_dataset(dataset_id = "s_wfs_alkis_bezirk")
 str(berlin_bezirke)
+```
 
+## Plot
 
-### Helper Function
+```{r plot}
+### Define Helper Function
 plot_bezirke <- function(layer) {
   layer %>%
     dplyr::select(.data$namgem,
