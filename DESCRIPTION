@@ -1,0 +1,32 @@
+Package: kwb.fisbroker
+Title: R Package for Getting Spatial Data from FIS-Broker
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Michael", "Rustler", , "michael.rustler@kompetenz-wasser.de", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-0647-7726")),
+    person("IMPETUS", role = "fnd"),
+    person("Kompetenzzentrum Wasser Berlin gGmbH (KWB)", role = "cph")
+  )
+Description: R Package for getting spatial data from FIS-Broker
+    (https://www.stadtentwicklung.berlin.de/geoinformation/fis-broker/).
+License: MIT + file LICENSE
+URL: https://github.com/KWB-R/kwb.fisbroker
+BugReports: https://github.com/KWB-R/kwb.fisbroker/issues
+Imports: 
+    fs,
+    httr,
+    kwb.utils,
+    magrittr,
+    ows4R,
+    sf,
+    xml2
+Suggests: 
+    covr,
+    dplyr,
+    ggplot2,
+    rmarkdown
+Remotes:
+    github::kwb-r/kwb.utils
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
