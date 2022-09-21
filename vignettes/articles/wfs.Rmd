@@ -25,10 +25,13 @@ DT::datatable(berlin_bezirke)
 ```{r plot}
 ### Define Helper Function
 plot_bezirke <- function(layer) {
-  layer %>%
-    dplyr::select(.data$namgem,
-                  .data$geometry) %>%
-    plot()
+  
+  ## fix as name for "geometry" (sf v1.0-7) seems to be renamed to "geom" in 
+  ## sf v1.0-8 (or if not might be different on macos)
+  sf_geometry_name <- c("geom", "geometry")
+  columns <- names(layer)[names(layer) %in% c("namgem", sf_geometry_name)]
+  
+  plot(layer[,columns])
 }
 
 plot_bezirke(berlin_bezirke)
