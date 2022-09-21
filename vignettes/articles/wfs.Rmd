@@ -22,7 +22,10 @@ DT::datatable(berlin_bezirke)
 
 ## Plot
 
-```{r plot}
+
+### Simple Plot
+
+```{r plot_simple}
 ### Define Helper Function
 plot_bezirke <- function(layer) {
   
@@ -35,5 +38,29 @@ plot_bezirke <- function(layer) {
 }
 
 plot_bezirke(berlin_bezirke)
+```
+
+### Leaflet Plot
+
+```{r plot_leaflet}
+### Plot to check if Berlin boundaries are plotted correctly.
+### Set target CRS
+crs_target <- 4326
+
+basemap <- berlin_bezirke %>%
+  sf::st_transform(crs = crs_target) %>%
+  leaflet::leaflet() %>%
+  leaflet::addTiles() %>%
+  leaflet::addProviderTiles(leaflet::providers$CartoDB.Positron) %>%
+  leaflet::addPolygons(stroke = FALSE, 
+                       fillColor = rainbow(n = length(shape_pt$namgem)), 
+                       fill = TRUE) %>% 
+  leaflet::addLegend(
+    position = "topright",
+    colors = rainbow(n = length(shape_pt$namgem)),
+    labels = shape_pt$namgem,
+    title = "Berliner Bezirke")
+
+basemap
 
 ```

@@ -25,6 +25,7 @@ Suggests:
     dplyr,
     DT,
     ggplot2,
+    leaflet,
     rlang,
     rmarkdown
 Remotes:
