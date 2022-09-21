@@ -53,7 +53,7 @@ basemap <- berlin_bezirke %>%
   leaflet::addTiles() %>%
   leaflet::addProviderTiles(leaflet::providers$CartoDB.Positron) %>%
   leaflet::addPolygons(stroke = FALSE, 
-                       fillColor = rainbow(n = length(shape_pt$namgem)), 
+                       fillColor = rainbow(n = length(berlin_bezirke$namgem)), 
                        fill = TRUE) %>% 
   leaflet::addLegend(
     position = "topright",
