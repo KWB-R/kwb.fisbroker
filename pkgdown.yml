@@ -3,7 +3,7 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   wfs: wfs.html
-last_built: 2022-09-21T15:27Z
+last_built: 2022-09-21T19:55Z
 urls:
   reference: https://kwb-r.github.io/kwb.fisbroker/reference
   article: https://kwb-r.github.io/kwb.fisbroker/articles
