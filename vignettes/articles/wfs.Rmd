@@ -22,7 +22,7 @@ DT::datatable(berlin_bezirke)
 
 ## Plot
 
-```{r plot, eval = FALSE}
+```{r plot}
 ### Define Helper Function
 plot_bezirke <- function(layer) {
   layer %>%
