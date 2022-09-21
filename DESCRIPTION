@@ -23,6 +23,7 @@ Imports:
 Suggests: 
     covr,
     dplyr,
+    DT,
     ggplot2,
     rlang,
     rmarkdown

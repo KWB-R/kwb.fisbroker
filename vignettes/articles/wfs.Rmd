@@ -16,11 +16,13 @@ library(kwb.fisbroker)
 
 berlin_bezirke <- kwb.fisbroker::get_wfs_dataset(dataset_id = "s_wfs_alkis_bezirk")
 str(berlin_bezirke)
+
+DT::datatable(berlin_bezirke)
 ```
 
 ## Plot
 
-```{r plot}
+```{r plot, eval = FALSE}
 ### Define Helper Function
 plot_bezirke <- function(layer) {
   layer %>%
