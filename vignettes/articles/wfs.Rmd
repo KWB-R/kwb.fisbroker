@@ -9,12 +9,25 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Import
+## Read
 
-```{r import}
+### Read Metadata
+
+```{r read_metadata}
 library(kwb.fisbroker)
 
-berlin_bezirke <- kwb.fisbroker::read_wfs(dataset_id = "s_wfs_alkis_bezirk")
+dataset_id <- "s_wfs_alkis_bezirk"
+
+berlin_bezirke_metadata <- kwb.fisbroker::read_metadata(dataset_id, 
+                                                        service_type = "WFS")
+
+DT::datatable(berlin_bezirke_metadata)
+```
+
+### Read WFS
+
+```{r read_wfs}
+berlin_bezirke <- kwb.fisbroker::read_wfs(dataset_id)
 str(berlin_bezirke)
 
 DT::datatable(berlin_bezirke)

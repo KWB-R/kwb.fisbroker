@@ -13,20 +13,24 @@ License: MIT + file LICENSE
 URL: https://github.com/KWB-R/kwb.fisbroker
 BugReports: https://github.com/KWB-R/kwb.fisbroker/issues
 Imports: 
+    dplyr,
     fs,
     httr,
     kwb.utils,
     magrittr,
     ows4R,
+    rlang,
+    rvest,
     sf,
+    stringr,
+    tibble,
+    tidyr,
     xml2
 Suggests: 
     covr,
-    dplyr,
     DT,
     ggplot2,
     leaflet,
-    rlang,
     rmarkdown
 Remotes:
     github::kwb-r/kwb.utils
