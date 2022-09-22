@@ -1,5 +1,5 @@
 ---
-title: "Get WFS Dataset"
+title: "Read WFS Dataset"
 ---
 
 ```{r, include = FALSE}
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 ```{r import}
 library(kwb.fisbroker)
 
-berlin_bezirke <- kwb.fisbroker::get_wfs_dataset(dataset_id = "s_wfs_alkis_bezirk")
+berlin_bezirke <- kwb.fisbroker::read_wfs(dataset_id = "s_wfs_alkis_bezirk")
 str(berlin_bezirke)
 
 DT::datatable(berlin_bezirke)

@@ -2,7 +2,7 @@
 
 export("%>%")
 export(get_urls)
-export(get_wfs_dataset)
+export(read_wfs)
 importFrom(fs,path_join)
 importFrom(httr,GET)
 importFrom(httr,build_url)

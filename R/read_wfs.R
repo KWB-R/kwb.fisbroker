@@ -1,4 +1,4 @@
-#' Get WFS Dataset
+#' Read WFS Dataset from FIS-Broker
 #'
 #' @param dataset_id id of wfs dataset (default: "s_wfs_alkis_bezirk"). Needs to
 #' checked out manually as described below:
@@ -18,11 +18,11 @@
 #' @importFrom xml2 write_xml
 #' @seealso \url{https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=s_wfs_alkis_bezirk@@senstadt&type=WFS}
 #' @examples
-#' berlin_bezirke <- kwb.fisbroker::get_wfs_dataset(dataset_id = "s_wfs_alkis_bezirk")
-get_wfs_dataset <- function(dataset_id = "s_wfs_alkis_bezirk",
-                            service_version = "2.0.0",
-                            srs_name = "EPSG:4258",
-                            debug = TRUE) {
+#' berlin_bezirke <- kwb.fisbroker::read_wfs(dataset_id = "s_wfs_alkis_bezirk")
+read_wfs <- function(dataset_id = "s_wfs_alkis_bezirk",
+                     service_version = "2.0.0",
+                     srs_name = "EPSG:4258",
+                     debug = TRUE) {
   fisbroker_urls <- get_urls()
 
   ## not used yet. Provides metadata for WFS dataset
