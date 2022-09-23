@@ -18,7 +18,6 @@ Imports:
     httr,
     kwb.utils,
     magrittr,
-    ows4R,
     rlang,
     rvest,
     sf,

@@ -7,7 +7,8 @@
 read_wfs(
   dataset_id = "s_wfs_alkis_bezirk",
   service_version = "2.0.0",
-  srs_name = "EPSG:4258",
+  srs = "EPSG:258332",
+  encoding = "UTF-8",
   debug = TRUE
 )
 }
@@ -23,7 +24,9 @@ of the url is the required dataset id!
 
 \item{service_version}{one of "1.0.0", "1.1.0" or "2.0.0" (default: "2.0.0")}
 
-\item{srs_name}{one of "EPSG:4258" or "EPSG:25833" (default: "EPSG:4258")}
+\item{srs}{one of "EPSG:4258" or "EPSG:25833" (default: "EPSG:25833")}
+
+\item{encoding}{default: UTF-8}
 
 \item{debug}{prints debug messages if TRUE (default: TRUE)}
 }
