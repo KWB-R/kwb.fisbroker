@@ -84,7 +84,7 @@ tables <- x %>%
 
 tables[[1]] <- tables[[1]] %>%  
   dplyr::mutate(X1 = stringr::str_replace(.data$X1, 
-                     pattern = "\xa0", NA_character_) %>% 
+                     pattern = "\xa0|^\\s*$", NA_character_) %>% 
                   stringr::str_remove(":")) %>% 
 tidyr::fill(.data$X1) %>% 
   dplyr::rename(parameter = .data$X1, 
@@ -96,7 +96,7 @@ tables[[2]] <- tables[[2]] %>%
                                   stringr::str_remove(":")) %>% 
   tidyr::fill(.data$X1) %>% 
   dplyr::rename(parameter = .data$X1, 
-                value = .data$X2)
+                value = .data$X2) 
 
 table <- dplyr::bind_rows(setNames(tables,
                           nm = headers),
