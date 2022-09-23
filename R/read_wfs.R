@@ -53,7 +53,7 @@ read_wfs <- function(dataset_id = "s_wfs_alkis_bezirk",
                            version = service_version,
                            request = "GetFeature",
                            typenames = sprintf("fis:%s", dataset_id),
-                           srs = srs_name
+                           srsName = srs
                          )
 
                          request <- httr::build_url(url)
