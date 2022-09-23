@@ -7,6 +7,7 @@
 #' 3. Read the content of \code{Rechneraddresse} in the opened tab. The basename
 #' of the url is the required dataset id!
 #' @param service_type either "WFS" or "WMS" (default: "WFS")
+#' @param encoding encoding of metadata FIS-Broker site (default: "Windows-1252")
 #' @param debug print debug messages (default: TRUE)
 #' @seealso \url{https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=s_wfs_alkis_bezirk@@senstadt&type=WFS}
 #' @return tibble with metadata for provided dataset_id
@@ -36,6 +37,7 @@
 #' wfs_meta
 read_metadata <- function(dataset_id = "s_wfs_alkis_bezirk", 
                           service_type = "WFS",
+                          encoding = "Windows-1252",
                           debug = TRUE) {
   
 url <- sprintf("%s/fb/berlin/service_intern.jsp?id=%s@senstadt&type=%s",
@@ -43,7 +45,7 @@ url <- sprintf("%s/fb/berlin/service_intern.jsp?id=%s@senstadt&type=%s",
                dataset_id, 
                service_type)
 
-x <- xml2::read_html(url)
+x <- xml2::read_html(url, encoding = encoding)
 
 commentline <- function() {paste0(rep("#", 80), collapse = "")}
 
@@ -70,8 +72,6 @@ msg <- sprintf("Importing %s metadata for dataset_id '%s' from FIS-Broker",
                dataset_id)
 kwb.utils::catAndRun(messageText = msg,
                      expr = {
-
-x <- xml2::read_html(url)
 
 headers <- x %>% 
   rvest::html_elements(css = "span.titel") %>% 
@@ -102,7 +102,7 @@ table <- dplyr::bind_rows(setNames(tables,
                           nm = headers),
                  .id = "title_name")
 
-tibble::tibble(title_id = length(headers),
+tibble::tibble(title_id = seq_len(length(headers)),
                title_name = headers) %>%  
   dplyr::left_join(table, 
                    by = "title_name")

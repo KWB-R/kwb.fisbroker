@@ -7,6 +7,7 @@
 read_metadata(
   dataset_id = "s_wfs_alkis_bezirk",
   service_type = "WFS",
+  encoding = "Windows-1252",
   debug = TRUE
 )
 }
@@ -21,6 +22,8 @@ of the url is the required dataset id!
 }}
 
 \item{service_type}{either "WFS" or "WMS" (default: "WFS")}
+
+\item{encoding}{encoding of metadata FIS-Broker site (default: "Windows-1252")}
 
 \item{debug}{print debug messages (default: TRUE)}
 }
