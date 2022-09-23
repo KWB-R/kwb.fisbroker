@@ -24,8 +24,8 @@
 #' berlin_bezirke_metadata
 #' 
 #' ### Multiple
-#' ids_wfs <- system.file("extdata/ids_wfs.txt", 
-#' package = "kwb.fisbroker")
+#' ids_wfs <- readLines(system.file("extdata/ids_wfs.txt", 
+#' package = "kwb.fisbroker"))
 #' 
 #' wfs_meta_list <- setNames(lapply(ids_wfs, function(id) {
 #' kwb.fisbroker::read_metadata(id)}),
