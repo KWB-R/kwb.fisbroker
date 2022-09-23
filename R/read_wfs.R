@@ -13,7 +13,7 @@
 #' @return imports selected WFS dataset into R
 #' @export
 #' @importFrom fs path_join
-#' @importFrom httr build_url content GET parse_url
+#' @importFrom httr build_url content GET parse_url status_code
 #' @importFrom sf read_sf
 #' @importFrom xml2 write_xml
 #' @seealso \url{https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=s_wfs_alkis_bezirk@@senstadt&type=WFS}
@@ -21,7 +21,7 @@
 #' berlin_bezirke <- kwb.fisbroker::read_wfs(dataset_id = "s_wfs_alkis_bezirk")
 read_wfs <- function(dataset_id = "s_wfs_alkis_bezirk",
                      service_version = "2.0.0",
-                     srs = "EPSG:258332",
+                     srs = "EPSG:25833",
                      encoding = "UTF-8",
                      debug = TRUE) {
   

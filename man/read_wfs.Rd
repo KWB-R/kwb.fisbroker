@@ -7,7 +7,7 @@
 read_wfs(
   dataset_id = "s_wfs_alkis_bezirk",
   service_version = "2.0.0",
-  srs = "EPSG:258332",
+  srs = "EPSG:25833",
   encoding = "UTF-8",
   debug = TRUE
 )
