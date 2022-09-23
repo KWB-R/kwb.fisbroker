@@ -7,6 +7,7 @@
 #' 3. Read the content of \code{Rechneraddresse} in the opened tab. The basename
 #' of the url is the required dataset id!
 #' @param service_type either "WFS" or "WMS" (default: "WFS")
+#' @param debug print debug messages (default: TRUE)
 #' @seealso \url{https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=s_wfs_alkis_bezirk@@senstadt&type=WFS}
 #' @return tibble with metadata for provided dataset_id
 #' @export
@@ -18,11 +19,24 @@
 #' @importFrom tidyr fill
 #' @importFrom rlang .data
 #' @examples
+#' ### One Dataset
 #' berlin_bezirke_metadata <- read_metadata(dataset_id = "s_wfs_alkis_bezirk")
 #' berlin_bezirke_metadata
 #' 
+#' ### Multiple
+#' ids_wfs <- system.file("extdata/ids_wfs.txt", 
+#' package = "kwb.fisbroker")
+#' 
+#' wfs_meta_list <- setNames(lapply(ids_wfs, function(id) {
+#' kwb.fisbroker::read_metadata(id)}),
+#' ids_wfs)
+#' 
+#' wfs_meta <- dplyr::bind_rows(wfs_meta_list, .id = "id_wfs")
+#' 
+#' wfs_meta
 read_metadata <- function(dataset_id = "s_wfs_alkis_bezirk", 
-                          service_type = "WFS") {
+                          service_type = "WFS",
+                          debug = TRUE) {
   
 url <- sprintf("%s/fb/berlin/service_intern.jsp?id=%s@senstadt&type=%s",
                get_urls()$base,
@@ -50,6 +64,12 @@ if(stringr::str_detect(text, "Fehler")) {
   
   stop(msg)
 }
+
+msg <- sprintf("Importing %s metadata for dataset_id '%s' from FIS-Broker",
+               service_type,
+               dataset_id)
+kwb.utils::catAndRun(messageText = msg,
+                     expr = {
 
 x <- xml2::read_html(url)
 
@@ -88,4 +108,6 @@ tibble::tibble(title_id = length(headers),
                    by = "title_name")
 
 
+                     })
 }
+

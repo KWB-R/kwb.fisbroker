@@ -4,7 +4,11 @@
 \alias{read_metadata}
 \title{Read metadata}
 \usage{
-read_metadata(dataset_id = "s_wfs_alkis_bezirk", service_type = "WFS")
+read_metadata(
+  dataset_id = "s_wfs_alkis_bezirk",
+  service_type = "WFS",
+  debug = TRUE
+)
 }
 \arguments{
 \item{dataset_id}{id of wfs dataset (default: "s_wfs_alkis_bezirk"). Needs to
@@ -17,6 +21,8 @@ of the url is the required dataset id!
 }}
 
 \item{service_type}{either "WFS" or "WMS" (default: "WFS")}
+
+\item{debug}{print debug messages (default: TRUE)}
 }
 \value{
 tibble with metadata for provided dataset_id
@@ -25,9 +31,21 @@ tibble with metadata for provided dataset_id
 Read metadata
 }
 \examples{
+### One Dataset
 berlin_bezirke_metadata <- read_metadata(dataset_id = "s_wfs_alkis_bezirk")
 berlin_bezirke_metadata
 
+### Multiple
+ids_wfs <- system.file("extdata/ids_wfs.txt", 
+package = "kwb.fisbroker")
+
+wfs_meta_list <- setNames(lapply(ids_wfs, function(id) {
+kwb.fisbroker::read_metadata(id)}),
+ids_wfs)
+
+wfs_meta <- dplyr::bind_rows(wfs_meta_list, .id = "id_wfs")
+
+wfs_meta
 }
 \seealso{
 \url{https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=s_wfs_alkis_bezirk@senstadt&type=WFS}
