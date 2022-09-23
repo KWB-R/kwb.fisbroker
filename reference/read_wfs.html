@@ -60,7 +60,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_wfs</span><span class="op">(</span></span>
 <span>  dataset_id <span class="op">=</span> <span class="st">"s_wfs_alkis_bezirk"</span>,</span>
 <span>  service_version <span class="op">=</span> <span class="st">"2.0.0"</span>,</span>
-<span>  srs_name <span class="op">=</span> <span class="st">"EPSG:4258"</span>,</span>
+<span>  srs <span class="op">=</span> <span class="st">"EPSG:25833"</span>,</span>
+<span>  encoding <span class="op">=</span> <span class="st">"UTF-8"</span>,</span>
 <span>  debug <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -80,8 +81,12 @@ of the url is the required dataset id!</p></li>
 <dd><p>one of "1.0.0", "1.1.0" or "2.0.0" (default: "2.0.0")</p></dd>
 
 
-<dt>srs_name</dt>
-<dd><p>one of "EPSG:4258" or "EPSG:25833" (default: "EPSG:4258")</p></dd>
+<dt>srs</dt>
+<dd><p>one of "EPSG:4258" or "EPSG:25833" (default: "EPSG:25833")</p></dd>
+
+
+<dt>encoding</dt>
+<dd><p>default: UTF-8</p></dd>
 
 
 <dt>debug</dt>
@@ -102,9 +107,7 @@ of the url is the required dataset id!</p></li>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">berlin_bezirke</span> <span class="op">&lt;-</span> <span class="fu">kwb.fisbroker</span><span class="fu">::</span><span class="fu">read_wfs</span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="st">"s_wfs_alkis_bezirk"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS dataset_id 's_wfs_alkis_bezirk' from FIS-Broker ... [ows4R][INFO] OWSGetCapabilities - Fetching https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s_wfs_alkis_bezirk?service=WFS&amp;version=2.0.0&amp;request=GetCapabilities </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ok. (2.61s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS dataset_id 's_wfs_alkis_bezirk' from FIS-Broker ... ok. (1.41s) </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

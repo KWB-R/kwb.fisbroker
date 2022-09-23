@@ -57,7 +57,12 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_metadata</span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="st">"s_wfs_alkis_bezirk"</span>, service_type <span class="op">=</span> <span class="st">"WFS"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_metadata</span><span class="op">(</span></span>
+<span>  dataset_id <span class="op">=</span> <span class="st">"s_wfs_alkis_bezirk"</span>,</span>
+<span>  service_type <span class="op">=</span> <span class="st">"WFS"</span>,</span>
+<span>  encoding <span class="op">=</span> <span class="st">"Windows-1252"</span>,</span>
+<span>  debug <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -74,6 +79,14 @@ of the url is the required dataset id!</p></li>
 <dt>service_type</dt>
 <dd><p>either "WFS" or "WMS" (default: "WFS")</p></dd>
 
+
+<dt>encoding</dt>
+<dd><p>encoding of metadata FIS-Broker site (default: "Windows-1252")</p></dd>
+
+
+<dt>debug</dt>
+<dd><p>print debug messages (default: TRUE)</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -88,17 +101,19 @@ of the url is the required dataset id!</p></li>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">berlin_bezirke_metadata</span> <span class="op">&lt;-</span> <span class="fu">read_metadata</span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="st">"s_wfs_alkis_bezirk"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### One Dataset</span></span></span>
+<span class="r-in"><span><span class="va">berlin_bezirke_metadata</span> <span class="op">&lt;-</span> <span class="fu">read_metadata</span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="st">"s_wfs_alkis_bezirk"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_wfs_alkis_bezirk' from FIS-Broker ... ok. (0.10s) </span>
 <span class="r-in"><span><span class="va">berlin_bezirke_metadata</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 17 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    title_id title_name            parameter              value                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>        2 ALKIS Berlin Gemeinde Kurzbeschreibung       <span style="color: #949494;">"</span>Bezirke von Berlin<span style="color: #949494;">"</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>        2 ALKIS Berlin Gemeinde Koordinatensysteme     <span style="color: #949494;">"</span>EPSG:25833, EPSG:4258<span style="color: #949494;">"</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>        2 ALKIS Berlin Gemeinde Ausdehnung             <span style="color: #949494;">"</span>EPSG:25833: 369097,85…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>        2 ALKIS Berlin Gemeinde Ausdehnung             <span style="color: #949494;">"</span>EPSG:4258: 13,08, 52,…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>        2 ALKIS Berlin Gemeinde Nutzungsbedingungen    <span style="color: #949494;">"</span>Für die Nutzung der D…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>        2 ALKIS Berlin Gemeinde Zugriffsbeschränkungen <span style="color: #949494;">"</span>Es gelten keine Zugri…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>        1 ALKIS Berlin Gemeinde Kurzbeschreibung       <span style="color: #949494;">"</span>Bezirke von Berlin<span style="color: #949494;">"</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>        1 ALKIS Berlin Gemeinde Koordinatensysteme     <span style="color: #949494;">"</span>EPSG:25833, EPSG:4258<span style="color: #949494;">"</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>        1 ALKIS Berlin Gemeinde Ausdehnung             <span style="color: #949494;">"</span>EPSG:25833: 369097,85…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>        1 ALKIS Berlin Gemeinde Ausdehnung             <span style="color: #949494;">"</span>EPSG:4258: 13,08, 52,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>        1 ALKIS Berlin Gemeinde Nutzungsbedingungen    <span style="color: #949494;">"</span>Für die Nutzung der D…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>        1 ALKIS Berlin Gemeinde Zugriffsbeschränkungen <span style="color: #949494;">"</span>Es gelten keine Zugri…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>        2 Technische Angaben    Rechneradresse         <span style="color: #949494;">"</span>https://fbinter.stadt…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>        2 Technische Angaben    Standard               <span style="color: #949494;">"</span>WFS<span style="color: #949494;">"</span>                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>        2 Technische Angaben    Version                <span style="color: #949494;">"</span>1.0.0<span style="color: #949494;">"</span>                </span>
@@ -111,6 +126,61 @@ of the url is the required dataset id!</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span>        2 Technische Angaben    Ausgabeformate         <span style="color: #949494;">"</span>text/xml; subtype=gml…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span>        2 Technische Angaben    Ausgabeformate         <span style="color: #949494;">"</span>text/xml; subtype=gml…</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### Multiple</span></span></span>
+<span class="r-in"><span><span class="va">ids_wfs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/ids_wfs.txt"</span>, </span></span>
+<span class="r-in"><span>package <span class="op">=</span> <span class="st">"kwb.fisbroker"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">wfs_meta_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">ids_wfs</span>, <span class="kw">function</span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">kwb.fisbroker</span><span class="fu">::</span><span class="fu">read_metadata</span><span class="op">(</span><span class="va">id</span><span class="op">)</span><span class="op">}</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="va">ids_wfs</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's03_11_3LRP2018_2025' from FIS-Broker ... ok. (0.05s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'sach_nutz2020_nutzsa' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'sach_nutz2015_nutzsa' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's08_07_2tehganlagen' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's03_12_2emissionen' from FIS-Broker ... ok. (0.05s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_messpunkte' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's02_08fisch2013' from FIS-Broker ... ok. (0.05s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'sach_nutz2020_nutzsa' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'sach_nutz2015_nutzsa' from FIS-Broker ... ok. (0.05s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_05_09gruenvol2020' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'co2veg_block' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'co2veg_strasse' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_2lniederschl_bl_8110' from FIS-Broker ... ok. (0.05s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_2lniederschl_fl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_2lniederschl_str_8110' from FIS-Broker ... ok. (0.05s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_3lniederschl_bl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_3lniederschl_fl_8110' from FIS-Broker ... ok. (0.05s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_3lniederschl_str_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_1ltempmittel_bl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_1ltempmittel_fl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_1ltempmittel_str_8110' from FIS-Broker ... ok. (0.05s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_2ltempmittel_bl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_2ltempmittel_str_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_3ltempmittel_bl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_3ltempmittel_fl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_3ltempmittel_str_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_5ltempmittel_bl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_5ltempmittel_fl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_5ltempmittel_str_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's03_11_3LRP2018_2025' from FIS-Broker ... ok. (0.05s) </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">wfs_meta</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">wfs_meta_list</span>, .id <span class="op">=</span> <span class="st">"id_wfs"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">wfs_meta</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 495 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    id_wfs               title_id title_name                        param…¹ value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> s03_11_3LRP2018_2025        1 Luftreinhalteplan 2018-2025 - Sz… Kurzbe… <span style="color: #949494;">"</span>Wir…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> s03_11_3LRP2018_2025        1 Luftreinhalteplan 2018-2025 - Sz… Koordi… <span style="color: #949494;">"</span>EPS…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> s03_11_3LRP2018_2025        1 Luftreinhalteplan 2018-2025 - Sz… Ausdeh… <span style="color: #949494;">"</span>EPS…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> s03_11_3LRP2018_2025        1 Luftreinhalteplan 2018-2025 - Sz… Nutzun… <span style="color: #949494;">"</span>Für…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> s03_11_3LRP2018_2025        1 Luftreinhalteplan 2018-2025 - Sz… Zugrif… <span style="color: #949494;">"</span>Es …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> s03_11_3LRP2018_2025        2 Technische Angaben                Rechne… <span style="color: #949494;">"</span>htt…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> s03_11_3LRP2018_2025        2 Technische Angaben                Standa… <span style="color: #949494;">"</span>WFS<span style="color: #949494;">"</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> s03_11_3LRP2018_2025        2 Technische Angaben                Version <span style="color: #949494;">"</span>1.0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> s03_11_3LRP2018_2025        2 Technische Angaben                Version <span style="color: #949494;">"</span>1.1…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> s03_11_3LRP2018_2025        2 Technische Angaben                Version <span style="color: #949494;">"</span>2.0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 485 more rows, and abbreviated variable name ¹​parameter</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
