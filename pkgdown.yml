@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   wfs: wfs.html
   datasets: datasets.html
-last_built: 2022-09-24T09:50Z
+last_built: 2022-09-24T09:57Z
 urls:
   reference: https://kwb-r.github.io/kwb.fisbroker/reference
   article: https://kwb-r.github.io/kwb.fisbroker/articles
