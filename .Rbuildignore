@@ -9,3 +9,4 @@
 ^index\.md$
 ^README\.md$
 ^vignettes/articles$
+^data-raw$
