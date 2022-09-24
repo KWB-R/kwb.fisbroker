@@ -14,7 +14,24 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r fisbroker_datasets}
+## Dataset Names and Types
+
+```{r fisbroker_datasets_names_and_types}
 library(kwb.fisbroker)
-DT::datatable(kwb.fisbroker::fb_datasets)
+kwb.fisbroker::fb_datasets %>%  
+  dplyr::select(-.data$dataset_name_href,
+                -.data$dataset_type_href) %>% 
+DT::datatable()
+```
+## Dataset Links
+
+```{r fisbroker_datasets_links}
+library(kwb.fisbroker)
+kwb.fisbroker::fb_datasets %>%  
+  dplyr::select(
+    .data$dataset_id,
+    .data$dataset_name,
+    .data$dataset_name_href,
+    .data$dataset_type_href) %>% 
+DT::datatable()
 ```
