@@ -10,11 +10,12 @@
 #'   \item{category_name}{Category name of dataset)}
 #'   \item{dataset_id}{Dataset id, artifically generated!!!}
 #'   \item{dataset_name}{Dataset name as listed on table}
-#'   \item{dataset_name_href}{Link of dataset name. JS session Id was replaced with 
-#'   a placeholder}
+#'   \item{dataset_name_href}{Link of dataset name. JS session Id was replaced 
+#'   with a placeholder}
 #'   \item{dataset_type}{Dataset type as listed on table one of `ATOM`, `WFS` or 
 #'   `WMS`}
-#'   \item{dataset_type_href}{Link of dataset type. JS session Id was replaced with 
+#'   \item{dataset_type_href}{Link of dataset type. JS session Id was replaced 
+#'   with a placeholder} 
 #' } 
 #' @examples
 #' fb_datasets

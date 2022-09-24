@@ -19,6 +19,8 @@
 #' @importFrom tibble tibble
 #' @importFrom tidyr fill
 #' @importFrom rlang .data
+#' @importFrom stats setNames
+#' @importFrom kwb.utils repeated stopFormatted
 #' @examples
 #' ### One Dataset
 #' berlin_bezirke_metadata <- read_metadata(dataset_id = "s_wfs_alkis_bezirk")
@@ -35,79 +37,82 @@
 #' wfs_meta <- dplyr::bind_rows(wfs_meta_list, .id = "id_wfs")
 #' 
 #' wfs_meta
-read_metadata <- function(dataset_id = "s_wfs_alkis_bezirk", 
-                          service_type = "WFS",
-                          encoding = "Windows-1252",
-                          debug = TRUE) {
+read_metadata <- function(
+    dataset_id = "s_wfs_alkis_bezirk", 
+    service_type = "WFS",
+    encoding = "Windows-1252",
+    debug = TRUE
+) 
+{
+  url <- sprintf(
+    "%s/fb/berlin/service_intern.jsp?id=%s@senstadt&type=%s",
+    get_urls()$base,
+    dataset_id, 
+    service_type
+  )
   
-url <- sprintf("%s/fb/berlin/service_intern.jsp?id=%s@senstadt&type=%s",
-               get_urls()$base,
-               dataset_id, 
-               service_type)
-
-x <- xml2::read_html(url, encoding = encoding)
-
-commentline <- function() {paste0(rep("#", 80), collapse = "")}
-
-commentlines <- function() {
-  sprintf("%s\n%s\n%s", 
-          commentline(),
-          commentline(),
-          commentline())
-}
-text <- rvest::html_text(x)
-if(stringr::str_detect(text, "Fehler")) {
-  msg <- sprintf(paste0("\nMetadata for URL '%s' is not available!\n\n", 
-                        commentlines(), 
-                        "\n\n%s\n",
-                        commentlines()),
-                 url, 
-                 text)
+  x <- xml2::read_html(url, encoding = encoding)
   
-  stop(msg)
-}
+  commentlines <- function() {
+    commentline <- kwb.utils::repeated("#", 80)
+    sprintf("%s\n%s\n%s", commentline, commentline, commentline)
+  }
+  
+  text <- rvest::html_text(x)
+  
+  if (stringr::str_detect(text, "Fehler")) {
+    kwb.utils::stopFormatted(
+      paste0(
+        "\nMetadata for URL '%s' is not available!\n\n", 
+        commentlines(), 
+        "\n\n%s\n",
+        commentlines()
+      ),
+      url, 
+      text
+    )
+  }
+  
+  kwb.utils::catAndRun(
+    messageText = sprintf(
+      "Importing %s metadata for dataset_id '%s' from FIS-Broker",
+      service_type,
+      dataset_id
+    ), 
+    expr = {
+      
+      headers <- x %>% 
+        rvest::html_elements(css = "span.titel") %>% 
+        rvest::html_text()
+      
+      tables <- x %>%  
+        rvest::html_elements(css = "table.noborder") %>%  
+        rvest::html_table()
 
-msg <- sprintf("Importing %s metadata for dataset_id '%s' from FIS-Broker",
-               service_type,
-               dataset_id)
-kwb.utils::catAndRun(messageText = msg,
-                     expr = {
+      harmonise <- function(df, pattern) {
+        df %>% 
+          dplyr::mutate(
+            X1 = stringr::str_replace(.data$X1, pattern, NA_character_) %>% 
+              stringr::str_remove(":")
+          ) %>%
+          tidyr::fill(.data$X1) %>% 
+          dplyr::rename(parameter = .data$X1, value = .data$X2)
+      } 
+      
+      tables[[1]] <- harmonise(tables[[1]], pattern = "\xa0|^\\s*$")
+      tables[[2]] <- harmonise(tables[[2]], pattern = "^\\s*$")
 
-headers <- x %>% 
-  rvest::html_elements(css = "span.titel") %>% 
-  rvest::html_text()
-
-tables <- x %>%  
-  rvest::html_elements(css = "table.noborder") %>%  
-  rvest::html_table()
-
-
-tables[[1]] <- tables[[1]] %>%  
-  dplyr::mutate(X1 = stringr::str_replace(.data$X1, 
-                     pattern = "\xa0|^\\s*$", NA_character_) %>% 
-                  stringr::str_remove(":")) %>% 
-tidyr::fill(.data$X1) %>% 
-  dplyr::rename(parameter = .data$X1, 
-                value = .data$X2)
-
-tables[[2]] <- tables[[2]] %>%   
-  dplyr::mutate(X1 = stringr::str_replace(.data$X1,
-                                          pattern = "^\\s*$", NA_character_) %>% 
-                                  stringr::str_remove(":")) %>% 
-  tidyr::fill(.data$X1) %>% 
-  dplyr::rename(parameter = .data$X1, 
-                value = .data$X2) 
-
-table <- dplyr::bind_rows(setNames(tables,
-                          nm = headers),
-                 .id = "title_name")
-
-tibble::tibble(title_id = seq_len(length(headers)),
-               title_name = headers) %>%  
-  dplyr::left_join(table, 
-                   by = "title_name")
-
-
-                     })
+      table <- dplyr::bind_rows(
+        stats::setNames(tables,nm = headers),
+        .id = "title_name"
+      )
+      
+      tibble::tibble(
+        title_id = seq_len(length(headers)),
+        title_name = headers
+      ) %>%  
+        dplyr::left_join(table, by = "title_name")
+    }
+  )
 }
 
