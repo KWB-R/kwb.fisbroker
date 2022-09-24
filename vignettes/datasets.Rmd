@@ -1,0 +1,20 @@
+---
+title: "FIS-Broker Datasets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FIS-Broker Datasets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r fisbroker_datasets}
+library(kwb.fisbroker)
+DT::datatable(kwb.fisbroker::fb_datasets)
+```
