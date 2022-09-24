@@ -1,5 +1,6 @@
 #' Get Dataset Overview 
 #'
+#' @param dbg whether or not to show debug messages
 #' @return tibble with 7 columns and rows equal to number of datasets (
 #' one for each dataset type, e.g WMS, WFS, ATOM) 
 #' \describe{
@@ -22,79 +23,89 @@
 #' @importFrom tidyr fill
 #' @examples
 #' fb_dataset_overview <- kwb.fisbroker::get_dataset_overview()
-get_dataset_overview <- function() {
-
-response <- login_to_fis_broker() %>%
-  compose_fis_broker_url(cmd = "navigationFrameResult") %>%
-  httr::GET()
-
-tabelle <- response %>%
-  httr::content(as = "text") %>%
-  rvest::read_html() %>% 
-  rvest::html_element(css = "table.nav_tabelle") 
-
-x <- tabelle %>% 
-  rvest::html_elements(css = "tr") 
-
-is_category <- stringr::str_detect(as.character(x), "class=\"kategorie\"")
-
-categories_df <- tibble::tibble(
-  idx = which(is_category),
-  category_id = seq_len(length(idx)), 
-  category_name = rvest::html_text(x[idx])
-)
-
-is_dataset <- !is_category
-
-datasets_df <- tibble::tibble(idx = which(is_dataset), 
-                              dataset_id = seq_len(length(idx)), 
-                              dataset_name_raw = rvest::html_text(x[idx]))
-
-
-datasets_text_list <- stats::setNames(lapply(datasets_df$idx, function(index) {
-  elements <- x[index] %>%  
-    rvest::html_elements(css = "a.standard")
+get_dataset_overview <- function(dbg = TRUE)
+{
+  session_id <- login_to_fis_broker(dbg = dbg)
   
-  elements_text <- rvest::html_text(elements)
-  elements_href <- rvest::html_attr(elements, "href") %>%  
-    stringr::str_replace(get_session_id(.),
-                         "<jsessionid>")
+  tabelle <- session_id %>%
+    compose_fis_broker_url(cmd = "navigationFrameResult") %>%
+    get_html_as_text(dbg = dbg) %>%
+    rvest::read_html() %>% 
+    rvest::html_element(css = "table.nav_tabelle") 
   
-  n_elements <- length(elements)
+  x <- tabelle %>% 
+    rvest::html_elements(css = "tr") 
   
-  if(n_elements == 1L) {
-    tibble::tibble(dataset_name = elements_text[1L], 
-                   dataset_mid = get_mid(elements_href[1L]),
-                   dataset_name_href = elements_href[1L])
-  } else if (n_elements > 1L) {
-    dataset_name <- rvest::html_text(elements[1L])
-    dataset_types <- rvest::html_text(elements[-1L])
+  is_category <- stringr::str_detect(as.character(x), "class=\"kategorie\"")
+  
+  categories_df <- tibble::tibble(
+    idx = which(is_category),
+    category_id = seq_len(length(.data$idx)), 
+    category_name = rvest::html_text(x[.data$idx])
+  )
+  
+  is_dataset <- !is_category
+  
+  datasets_df <- tibble::tibble(
+    idx = which(is_dataset), 
+    dataset_id = seq_len(length(.data$idx)), 
+    dataset_name_raw = rvest::html_text(x[.data$idx])
+  )
+  
+  datasets_text_list <- lapply(datasets_df$idx, function(index) {
     
-    tibble::tibble(dataset_name = elements_text[1L], 
-                   dataset_mid = get_mid(elements_href[1L]),
-                   dataset_name_href = elements_href[1L],
-                   dataset_type = elements_text[-1L],
-                   dataset_type_href = elements_href[-1L])
-  } else {
-    stop("no element found")
-  }  
+    elements <- x[index] %>%  
+      rvest::html_elements(css = "a.standard")
+    
+    elements_text <- rvest::html_text(elements)
+    elements_href <- rvest::html_attr(elements, "href") 
+    
+    elements_href <- stringr::str_replace(
+      elements_href, 
+      get_session_id(elements_href), 
+      "<jsessionid>"
+    )
+    
+    n_elements <- length(elements)
+    
+    if (n_elements == 0L) {
+      stop("no element found")
+    }
+    
+    dataset_name <- elements_text[1L]
+    href <- elements_href[1L]
+    dataset_mid <- get_mid(href)
+    
+    if (n_elements == 1L) {
+      return (tibble::tibble(
+        dataset_name = dataset_name, 
+        dataset_mid = dataset_mid,
+        dataset_name_href = href
+      ))
+    } 
+    
+    tibble::tibble(
+      dataset_name = dataset_name, 
+      dataset_mid = dataset_mid,
+      dataset_name_href = href,
+      dataset_type = elements_text[-1L],
+      dataset_type_href = elements_href[-1L]
+    )
+  })
   
+  names(datasets_text_list) <- datasets_df$idx
   
-}),datasets_df$idx)
-
-fb_datasets <- dplyr::bind_rows(datasets_text_list, .id = "idx") %>%
-  dplyr::mutate(idx = as.integer(.data$idx))
-
-fb_datasets <- categories_df %>%  
-  dplyr::full_join(fb_datasets, by = "idx") %>% 
-  dplyr::arrange(.data$idx) %>% 
-  tidyr::fill(.data$category_id, 
-              .data$category_name) %>% 
-  dplyr::filter(!is.na(.data$dataset_name)) %>%  
-  dplyr::left_join(datasets_df[,c("idx", "dataset_id")], by = "idx") %>% 
-  dplyr::select(- .data$idx) %>% 
-  dplyr::relocate(.data$dataset_id, .before = .data$dataset_name)
-
-fb_datasets
+  fb_datasets <- dplyr::bind_rows(datasets_text_list, .id = "idx") %>%
+    dplyr::mutate(idx = as.integer(.data$idx))
+  
+  fb_datasets <- categories_df %>%  
+    dplyr::full_join(fb_datasets, by = "idx") %>% 
+    dplyr::arrange(.data$idx) %>% 
+    tidyr::fill(.data$category_id, .data$category_name) %>% 
+    dplyr::filter(!is.na(.data$dataset_name)) %>%  
+    dplyr::left_join(datasets_df[,c("idx", "dataset_id")], by = "idx") %>% 
+    dplyr::select(- .data$idx) %>% 
+    dplyr::relocate(.data$dataset_id, .before = .data$dataset_name)
+  
+  structure(fb_datasets, session_id = session_id)
 }
-

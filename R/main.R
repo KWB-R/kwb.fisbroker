@@ -18,27 +18,37 @@ if (FALSE)
 }
 
 # login_to_fis_broker ----------------------------------------------------------
-login_to_fis_broker <- function()
+login_to_fis_broker <- function(dbg = TRUE)
 {
-  compose_fis_broker_url(cmd = "user_login") %>%
-    httr::GET() %>%
-    httr::content(as = "text") %>%
-    get_session_id()
+  kwb.utils::catAndRun(dbg = dbg, "Login to FIS-Broker", {
+    compose_fis_broker_url(cmd = "user_login") %>%
+      httr::GET() %>%
+      httr::content(as = "text") %>%
+      get_session_id()
+  })
 }
 
 # compose_fis_broker_url -------------------------------------------------------
-compose_fis_broker_url <- function(cmd = "user_login", session_id = NULL)
+compose_fis_broker_url <- function(
+    cmd = "user_login", session_id = NULL, type = NULL, id = NULL
+)
 {
-  template <- "https://fbinter.stadt-berlin.de/fb/gisbroker.do;jsessionid=?cmd="
-  
-  url <- httr::parse_url(template)
+  url <- httr::parse_url(get_urls()$do)
   
   url$params <- if (!is.null(session_id)) {
-    paste0(url$params, session_id)
+    paste0("jsessionid=", session_id)
   }
   
   url$query$cmd <- cmd
   
+  url$query$type <- if (!is.null(type)) {
+    type
+  }
+  
+  url$query$id <- if (!is.null(id)) {
+    id
+  }
+
   httr::build_url(url)
 }
 

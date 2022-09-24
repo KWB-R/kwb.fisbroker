@@ -4,7 +4,10 @@
 \alias{get_dataset_overview}
 \title{Get Dataset Overview}
 \usage{
-get_dataset_overview()
+get_dataset_overview(dbg = TRUE)
+}
+\arguments{
+\item{dbg}{whether or not to show debug messages}
 }
 \value{
 tibble with 7 columns and rows equal to number of datasets (
