@@ -58,9 +58,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_dataset_overview</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_dataset_overview</span><span class="op">(</span>dbg <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <dl><dt>dbg</dt>
+<dd><p>whether or not to show debug messages</p></dd>
+
+</dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
@@ -96,6 +102,8 @@ with a placeholder</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fb_dataset_overview</span> <span class="op">&lt;-</span> <span class="fu">kwb.fisbroker</span><span class="fu">::</span><span class="fu">get_dataset_overview</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Login to FIS-Broker ... ok. (2.80s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Getting HTML text from 'https://fbinter.stadt-berlin.de/fb/gisbroker.do;jsessionid=2D741B6E5DEA20C75023C657E097167E?cmd=navigationFrameResult' ... ok. (2.02s) </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
