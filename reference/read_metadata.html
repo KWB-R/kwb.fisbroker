@@ -104,7 +104,7 @@ of the url is the required dataset id!</p></li>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### One Dataset</span></span></span>
 <span class="r-in"><span><span class="va">berlin_bezirke_metadata</span> <span class="op">&lt;-</span> <span class="fu">read_metadata</span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="st">"s_wfs_alkis_bezirk"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_wfs_alkis_bezirk' from FIS-Broker ... ok. (0.14s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_wfs_alkis_bezirk' from FIS-Broker ... ok. (0.09s) </span>
 <span class="r-in"><span><span class="va">berlin_bezirke_metadata</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 17 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    title_id title_name            parameter              value                  </span>
@@ -134,36 +134,36 @@ of the url is the required dataset id!</p></li>
 <span class="r-in"><span><span class="va">wfs_meta_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">ids_wfs</span>, <span class="kw">function</span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="fu">kwb.fisbroker</span><span class="fu">::</span><span class="fu">read_metadata</span><span class="op">(</span><span class="va">id</span><span class="op">)</span><span class="op">}</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span><span class="va">ids_wfs</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's03_11_3LRP2018_2025' from FIS-Broker ... ok. (0.07s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'sach_nutz2020_nutzsa' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'sach_nutz2015_nutzsa' from FIS-Broker ... ok. (0.08s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's08_07_2tehganlagen' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's03_12_2emissionen' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_messpunkte' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's02_08fisch2013' from FIS-Broker ... ok. (0.07s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'sach_nutz2020_nutzsa' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'sach_nutz2015_nutzsa' from FIS-Broker ... ok. (0.07s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_05_09gruenvol2020' from FIS-Broker ... ok. (0.07s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'co2veg_block' from FIS-Broker ... ok. (0.07s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'co2veg_strasse' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_2lniederschl_bl_8110' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_2lniederschl_fl_8110' from FIS-Broker ... ok. (0.07s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_2lniederschl_str_8110' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_3lniederschl_bl_8110' from FIS-Broker ... ok. (0.09s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_3lniederschl_fl_8110' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_3lniederschl_str_8110' from FIS-Broker ... ok. (0.07s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_1ltempmittel_bl_8110' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_1ltempmittel_fl_8110' from FIS-Broker ... ok. (0.08s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_1ltempmittel_str_8110' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_2ltempmittel_bl_8110' from FIS-Broker ... ok. (0.08s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_2ltempmittel_str_8110' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_3ltempmittel_bl_8110' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_3ltempmittel_fl_8110' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_3ltempmittel_str_8110' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_5ltempmittel_bl_8110' from FIS-Broker ... ok. (0.07s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_5ltempmittel_fl_8110' from FIS-Broker ... ok. (0.07s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_5ltempmittel_str_8110' from FIS-Broker ... ok. (0.06s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's03_11_3LRP2018_2025' from FIS-Broker ... ok. (0.06s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's03_11_3LRP2018_2025' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'sach_nutz2020_nutzsa' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'sach_nutz2015_nutzsa' from FIS-Broker ... ok. (0.05s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's08_07_2tehganlagen' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's03_12_2emissionen' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_messpunkte' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's02_08fisch2013' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'sach_nutz2020_nutzsa' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'sach_nutz2015_nutzsa' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_05_09gruenvol2020' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'co2veg_block' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 'co2veg_strasse' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_2lniederschl_bl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_2lniederschl_fl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_2lniederschl_str_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_3lniederschl_bl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_3lniederschl_fl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_08_3lniederschl_str_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_1ltempmittel_bl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_1ltempmittel_fl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_1ltempmittel_str_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_2ltempmittel_bl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_2ltempmittel_str_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_3ltempmittel_bl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_3ltempmittel_fl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_3ltempmittel_str_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_5ltempmittel_bl_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_5ltempmittel_fl_8110' from FIS-Broker ... ok. (0.05s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's_04_02_5ltempmittel_str_8110' from FIS-Broker ... ok. (0.04s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Importing WFS metadata for dataset_id 's03_11_3LRP2018_2025' from FIS-Broker ... ok. (0.04s) </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">wfs_meta</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">wfs_meta_list</span>, .id <span class="op">=</span> <span class="st">"id_wfs"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
