@@ -43,10 +43,17 @@ compose_fis_broker_url <- function(cmd = "user_login", session_id = NULL)
 }
 
 # get_session_id ---------------------------------------------------------------
-get_session_id <- function(html_text) 
+get_session_id <- function(x) 
 {
-  extract_single_string('jsessionid=([^?]+)\\?', html_text)
+  extract_single_string('jsessionid=([^?]+)\\?', x)
 }
+
+# get_mid ----------------------------------------------------------------------
+get_mid <- function(x) 
+{
+  extract_single_string(pattern = '&mid=(.*)$', x)
+}
+
 
 # extract_single_string --------------------------------------------------------
 extract_single_string <- function(pattern, x)
@@ -69,7 +76,7 @@ extract_overview_table <- function(html_tree)
   ids <- html_tree %>%
     rvest::html_nodes(xpath = '//table[@class="nav_tabelle"]/tr/td/div/div/div/a[1]') %>%
     rvest::html_attr("href") %>%
-    extract_single_string(pattern = '&mid=(.*)$') %>%
+    get_mid() %>%
     utils::URLdecode()
   
   stopifnot(length(ids) == nrow(overview))

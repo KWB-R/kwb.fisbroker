@@ -20,21 +20,23 @@ knitr::opts_chunk$set(
 
 ```{r datasets_stats_type}
 library(kwb.fisbroker)
-kwb.fisbroker::fb_datasets %>%  
+fb_datasets <- kwb.fisbroker::get_dataset_overview()
+
+fb_datasets %>%  
   dplyr::count(.data$dataset_type) %>% 
   dplyr::arrange(dplyr::desc(.data$n)) %>% 
-DT::datatable()
+  DT::datatable()
 ```
 
 ### By Type and Category
 
 ```{r datasets_stats_typecategory}
 
-kwb.fisbroker::fb_datasets %>%  
+fb_datasets %>%  
   dplyr::count(.data$dataset_type,
                .data$category_name) %>% 
   dplyr::arrange(dplyr::desc(.data$n)) %>% 
-DT::datatable()
+  DT::datatable()
 ```
 
 
@@ -43,20 +45,20 @@ DT::datatable()
 ### Dataset Names and Types
 
 ```{r fisbroker_datasets_names_and_types}
-kwb.fisbroker::fb_datasets %>%  
+fb_datasets %>%  
   dplyr::select(-.data$dataset_name_href,
                 -.data$dataset_type_href) %>% 
-DT::datatable()
+  DT::datatable()
 ```
 
 ### Dataset Links
 
 ```{r fisbroker_datasets_links}
-kwb.fisbroker::fb_datasets %>%  
+fb_datasets %>%  
   dplyr::select(
     .data$dataset_id,
     .data$dataset_name,
     .data$dataset_name_href,
     .data$dataset_type_href) %>% 
-DT::datatable()
+  DT::datatable()
 ```
