@@ -14,19 +14,44 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Dataset Names and Types
+## Dataset Statistics
+
+### By Type
+
+```{r datasets_stats_type}
+library(kwb.fisbroker)
+kwb.fisbroker::fb_datasets %>%  
+  dplyr::count(.data$dataset_type) %>% 
+  dplyr::arrange(dplyr::desc(.data$n)) %>% 
+DT::datatable()
+```
+
+### By Type and Category
+
+```{r datasets_stats_typecategory}
+
+kwb.fisbroker::fb_datasets %>%  
+  dplyr::count(.data$dataset_type,
+               .data$category_name) %>% 
+  dplyr::arrange(dplyr::desc(.data$n)) %>% 
+DT::datatable()
+```
+
+
+## All Datasets 
+
+### Dataset Names and Types
 
 ```{r fisbroker_datasets_names_and_types}
-library(kwb.fisbroker)
 kwb.fisbroker::fb_datasets %>%  
   dplyr::select(-.data$dataset_name_href,
                 -.data$dataset_type_href) %>% 
 DT::datatable()
 ```
-## Dataset Links
+
+### Dataset Links
 
 ```{r fisbroker_datasets_links}
-library(kwb.fisbroker)
 kwb.fisbroker::fb_datasets %>%  
   dplyr::select(
     .data$dataset_id,
