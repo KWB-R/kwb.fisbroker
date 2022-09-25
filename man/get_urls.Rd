@@ -4,10 +4,13 @@
 \alias{get_urls}
 \title{Get Urls}
 \usage{
-get_urls(...)
+get_urls(..., key. = NULL)
 }
 \arguments{
 \item{\dots}{further arguments passed to \code{\link[kwb.utils]{resolve}}}
+
+\item{key.}{optional. Name of element to be returned from the URL dictionary.
+If \code{NULL} (the default), the whole dictionary (a list) is returned.}
 }
 \value{
 return \code{base} and \code{wfs} urls of FIS-Broker
