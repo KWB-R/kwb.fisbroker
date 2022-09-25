@@ -28,6 +28,9 @@
     <loc>https://kwb-r.github.io/kwb.fisbroker/news/index.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.fisbroker/reference/compose_fis_broker_url.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.fisbroker/reference/get_dataset_overview.html</loc>
   </url>
   <url>
@@ -35,6 +38,9 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.fisbroker/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.fisbroker/reference/login_to_fis_broker.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.fisbroker/reference/pipe.html</loc>
