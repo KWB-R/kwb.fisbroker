@@ -34,12 +34,14 @@ Suggests:
     DT,
     ggplot2,
     knitr,
+    kwb.pkgbuild,
     leaflet,
     rmarkdown
 VignetteBuilder: 
     knitr
 Remotes:
-    github::kwb-r/kwb.utils
+    github::kwb-r/kwb.utils,
+    github::kwb-r/kwb.pkgbuild
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
