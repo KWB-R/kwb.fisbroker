@@ -14,15 +14,19 @@ if (FALSE)
 }
 
 # read_all_metadata ------------------------------------------------------------
-read_all_metadata <- function(overview = get_dataset_overview(), dbg = TRUE)
+read_all_metadata <- function(
+    overview = get_dataset_overview(), 
+    dbg = TRUE, 
+    method = 1L
+)
 {
   #kwb.utils::assignPackageObjects("kwb.fisbroker")
   
-  urls <- create_info_page_url_from_overview(overview[1:3, ], method = 1L)
-  
+  hrefs <- create_info_page_hrefs(overview, method = method)
+
   #metadata_tables <- kwb.utils:::get_cached("metadata_tables")
   
-  metadata_tables <- lapply(urls, function(url) read_metadata(url = url))
+  metadata_tables <- lapply(hrefs, function(href) read_metadata(url = href))
   
   #kwb.utils:::cache_and_return(metadata_tables)
   
@@ -32,8 +36,8 @@ read_all_metadata <- function(overview = get_dataset_overview(), dbg = TRUE)
     kwb.utils::moveColumnsToFront("identifier")
 }
 
-# create_info_page_url_from_overview -------------------------------------------
-create_info_page_url_from_overview <- function(
+# create_info_page_hrefs -------------------------------------------------------
+create_info_page_hrefs <- function(
     overview, 
     method = 2L, 
     dbg = TRUE
@@ -55,13 +59,9 @@ create_info_page_url_from_overview <- function(
           )
         }))
       } else if (method == 2L) {
-        fmt <- get_urls(
-          key. = "href_type", 
-          sid = "5C260ED60B59B9791B98809B07A412C1"
-        ) %>% kwb.utils::multiSubstitute(list(
-          "<(type|id)>" = "%s"
-        ))
-        sprintf(fmt, overview$type, overview$identifier)
+        get_urls(key. = "href_type", sid = session_id) %>% 
+          kwb.utils::multiSubstitute(list("<(type|id)>" = "%s")) %>%
+          sprintf(overview$type, utils::URLencode(overview$identifier))
       }
     }
   )
