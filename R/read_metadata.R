@@ -94,19 +94,19 @@ read_metadata <- function(
 ) 
 {
   if (is.null(url)) {
-    url <- get_urls(id = dataset_id, type = service_type)$meta
+    url <- get_urls(key. = "href_meta", id = dataset_id, type = service_type)
   }
 
   stopifnot(length(url) == 1L)
   
   url %>%
-    get_html_as_text() %>%
+    get_html_as_text(dbg = debug) %>%
     rvest::read_html(encoding = encoding) %>%
-    parse_for_metadata()
+    parse_for_metadata(dbg = debug)
 }
 
 # parse_for_metadata -----------------------------------------------------------
-parse_for_metadata <- function(x)
+parse_for_metadata <- function(x, dbg = TRUE)
 {
   stopifnot(inherits(x, "xml_node"))
   
