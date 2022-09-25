@@ -6,6 +6,7 @@ columns_to_factor <- function(data, columns)
 }
                               
 # commentlines -----------------------------------------------------------------
+
 #' Commentlines
 #'
 #' @return commentlines
@@ -19,11 +20,12 @@ commentlines <- function()
   sprintf("%s\n%s\n%s", commentline, commentline, commentline)
 }
 
-
 # extract_hrefs ----------------------------------------------------------------
+
 #' Extract hrefs
 #'
-#' @param x x 
+#' @param x document, node set or single node, see
+#'   \code{\link[rvest]{html_element}}
 #'
 #' @return extracted hrefs
 #' @keywords internal
