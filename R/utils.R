@@ -83,7 +83,16 @@ get_html_as_text <- function(url, dbg = TRUE)
 }
 
 # httr_get_or_fail -------------------------------------------------------------
+
+#' GET Request with Check for Error
+#' 
+#' The function stops with error if the GET request returns status != 200
+#' 
+#' @param url URL to which to send a GET request
+#' @return If the status was not 200, the function returns what 
+#' \code{\link[httr]{GET}} returned
 #' @importFrom httr GET status_code
+#' @export
 httr_get_or_fail <- function(url)
 {
   response <- httr::GET(url)
