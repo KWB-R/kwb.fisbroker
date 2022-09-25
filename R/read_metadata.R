@@ -20,18 +20,7 @@ read_all_metadata <- function(overview = get_dataset_overview(), dbg = TRUE)
   
   session_id <- kwb.utils::getAttribute(overview, "session_id")
   
-  urls <- kwb.utils::catAndRun(
-    "Creating URLs to info pages",
-    dbg = dbg, 
-    expr = unlist(lapply(seq_len(nrow(overview)), function(i) {
-      compose_fis_broker_url(
-        cmd = "navigationShowService", 
-        session_id = session_id, 
-        type = overview$type[i],
-        id = utils::URLdecode(overview$identifier[i])
-      )
-    }))
-  )
+  urls <- create_info_page_url_from_overview(overview)
   
   #metadata_tables <- kwb.utils:::get_cached("metadata_tables")
   
@@ -43,6 +32,39 @@ read_all_metadata <- function(overview = get_dataset_overview(), dbg = TRUE)
     stats::setNames(utils::URLdecode(overview$identifier)) %>%
     kwb.utils::rbindAll("identifier") %>%
     kwb.utils::moveColumnsToFront("identifier")
+}
+
+# create_info_page_url_from_overview -------------------------------------------
+create_info_page_url_from_overview <- function(
+    overview, 
+    method = 2L, 
+    dbg = TRUE
+)
+{
+  kwb.utils::catAndRun(
+    "Creating URLs to info pages",
+    dbg = dbg, 
+    expr = {
+      if (method == 1L) {
+        unlist(lapply(seq_len(nrow(overview)), function(i) {
+          compose_fis_broker_url(
+            cmd = "navigationShowService", 
+            session_id = session_id, 
+            type = overview$type[i],
+            id = utils::URLdecode(overview$identifier[i])
+          )
+        }))
+      } else if (method == 2L) {
+        fmt <- get_urls(
+          key. = "href_type", 
+          sid = "5C260ED60B59B9791B98809B07A412C1"
+        ) %>% kwb.utils::multiSubstitute(list(
+          "<(type|id)>" = "%s"
+        ))
+        sprintf(fmt, overview$type, overview$identifier)
+      }
+    }
+  )
 }
 
 # read_metadata ----------------------------------------------------------------
