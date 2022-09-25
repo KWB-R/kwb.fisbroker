@@ -99,7 +99,8 @@ html_tree <- response %>%
   httr::content(as = "text") %>%
   rvest::read_html()
 
-overview <- extract_overview_table(html_tree)
+# To be integrated in kwb.fisbroker::get_dataset_overview()...
+overview <- kwb.fisbroker:::extract_overview_table(html_tree)
 
 #View(overview)
 ```
