@@ -22,73 +22,63 @@
 #' @seealso \url{https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=s_wfs_alkis_bezirk@@senstadt&type=WFS}
 #' @examples
 #' berlin_bezirke <- kwb.fisbroker::read_wfs(dataset_id = "k_alkis_bezirke")
-read_wms <- function(dataset_id = "k_alkis_bezirke",
-                     map_format = "jpeg", 
-                     service_version = "1.3.0",
-                     srs = "EPSG:25833",
-                     encoding = "UTF-8",
-                     debug = TRUE) {
+read_wms <- function(
+    dataset_id = "k_alkis_bezirke",
+    map_format = "jpeg", 
+    service_version = "1.3.0",
+    srs = "EPSG:25833",
+    encoding = "UTF-8",
+    debug = TRUE
+) 
+{
+  #kwb.utils::assignPackageObjects("kwb.fisbroker")
   
   stopifnot(map_format %in% c("jpeg", "png"))
   stopifnot(service_version %in% c("1.0.0", "1.1.0", "1.1.1", "1.3.0"))
   stopifnot(srs %in% c("EPSG:25833"))
   
   service_type <- "WMS"
-  fisbroker_urls <- get_urls()
-  map_format_name <- sprintf("image/%s", tolower(map_format))
   
-  msg <- sprintf("Importing %s dataset_id '%s' from FIS-Broker",
-                 service_type,
-                 dataset_id)
-  kwb.utils::catAndRun(messageText = msg,
-                       expr = {
-                         logger <- if (debug) {
-                           "INFO"
-                         } else {
-                           NULL
-                         }
-                         
-                         url_dataset  <- sprintf("%s/%s",
-                                                 fisbroker_urls$wms,
-                                                 dataset_id)
-                         
-                         url <- httr::parse_url(url_dataset)
-                         
-                         url$query <- list(
-                           service = service_type,
-                           version = service_version,
-                           request = "GetMap",
-                           typenames = sprintf("fis:%s", dataset_id),
-                           srs = srs,
-                           format = map_format_name,
-                           width = 1500, 
-                           height = 
-                         )
-                         
-                         url$query <- list(
-                           service = service_type,
-                           version = service_version,
-                           request = "GetCapabilities",
-                           typenames = sprintf("fis:%s", dataset_id)
-                         )
-                         
-                         request <- httr::build_url(url)
-                         
-                         response <- httr::GET(request)
-                         
-                         if(httr::status_code(response)!="200") {
-                           stop(sprintf("Request '%s' failed", request))
-                         }
-                         
-                         content <- httr::content(response, encoding = encoding)
-                         
-                         
-                         temp_file <-
-                           fs::path_join(c(tempdir(), paste0(basename(tempfile(
-                           )), ".xml")))
-                         xml2::write_xml(content, temp_file)
-                         
-                         sf::read_sf(temp_file)
-                       },
-                       dbg = debug)
+  msg <- sprintf(
+    "Importing %s dataset_id '%s' from FIS-Broker",
+    service_type,
+    dataset_id
+  )
+  
+  query_args_map <- list(
+    service = service_type,
+    version = service_version,
+    request = "GetMap",
+    typenames = paste0("fis:", dataset_id),
+    srs = srs,
+    format = paste0("image/", tolower(map_format)),
+    width = 1500
+    #, height = 
+  )
+  
+  query_args_capabilities <- list(
+    service = service_type,
+    version = service_version,
+    request = "GetCapabilities",
+    typenames = paste0("fis:", dataset_id)
+  )
+  
+  kwb.utils::catAndRun(msg, dbg = debug, expr = {
+    
+    full_url <- get_urls(
+      key. = "href_wms", 
+      id = dataset_id, 
+      query__wms = utils::URLencode(
+        do.call(to_query_string, query_args_capabilities)
+      )
+    )
+    
+    content <- httr::build_url(url) %>%
+      httr_get_or_fail() %>%
+      httr::content(encoding = encoding)
+
+    temp_file <- write_temp_xml_file(content)
+    
+    sf::read_sf(temp_file)
+  })
 }
