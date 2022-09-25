@@ -10,8 +10,8 @@ get_dataset_overview(dbg = TRUE)
 \item{dbg}{whether or not to show debug messages}
 }
 \value{
-tibble with 7 columns and rows equal to number of datasets (
-one for each dataset type, e.g WMS, WFS, ATOM)
+tibble with 7 columns and rows equal to number of datasets
+(one for each dataset type, e.g WMS, WFS, ATOM)
 \describe{
 \item{category_id}{Category id of dataset (artifically generated)}
 \item{category_name}{Category name of dataset)}
@@ -30,4 +30,5 @@ Get Dataset Overview
 }
 \examples{
 fb_dataset_overview <- kwb.fisbroker::get_dataset_overview()
+# View(fb_dataset_overview)
 }
