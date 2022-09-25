@@ -1,5 +1,5 @@
 # table_to_data_frame ----------------------------------------------------------
-table_to_data_frame <- function(table_node)
+table_to_data_frame <- function(table_node, dbg = TRUE)
 {
   #table_node <- tables[[3L]]
   stopifnot(inherits(table_node, "xml_node"))
@@ -18,6 +18,7 @@ table_to_data_frame <- function(table_node)
         "Removing %d row(s) with not exactly two fields",
         sum(!has_two_fields)
       ),
+      dbg = dbg,
       table_fields[has_two_fields]
     )
   }

@@ -118,7 +118,11 @@ parse_for_metadata <- function(x)
   
   stopifnot(length(tables) == length(titles))
   
-  data_frames <- lapply(stats::setNames(tables, titles), table_to_data_frame)
+  data_frames <- lapply(
+    stats::setNames(tables, titles), 
+    table_to_data_frame, 
+    dbg = dbg
+  )
   
   data_frames %>%
     kwb.utils::rbindAll(nameColumn = "section") %>%
