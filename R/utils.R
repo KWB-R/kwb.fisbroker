@@ -113,12 +113,6 @@ to_query_string <- function(...)
   paste0(names(x), "=", as.character(x), collapse = "&")
 }
 
-# to_url -----------------------------------------------------------------------
-to_url <- function(x)
-{
-  kwb.utils::addClass(x, "url")  
-}
-
 # write_temp_xml_file ----------------------------------------------------------
 write_temp_xml_file <- function(content)
 {
