@@ -22,6 +22,7 @@ knitr::opts_chunk$set(
 
 ```{r datasets_stats_type}
 library(kwb.fisbroker)
+
 fb_datasets <- kwb.fisbroker::get_dataset_overview()
 
 fb_datasets %>%  
@@ -79,4 +80,26 @@ fb_datasets %>%
     .data$identifier
   ) %>% 
   DT::datatable()
+```
+
+## Details
+
+What happens within `get_dataset_overview()`?
+
+```{r}
+library(kwb.fisbroker)
+
+response <- login_to_fis_broker() %>%
+  compose_fis_broker_url(cmd = "navigationFrameResult") %>%
+  httr_get_or_fail()
+
+#open_response(response)
+
+html_tree <- response %>%
+  httr::content(as = "text") %>%
+  rvest::read_html()
+
+overview <- extract_overview_table(html_tree)
+
+#View(overview)
 ```
