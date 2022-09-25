@@ -13,8 +13,7 @@ login_to_fis_broker <- function(dbg = TRUE)
 {
   kwb.utils::catAndRun(dbg = dbg, "Login to FIS-Broker", {
     compose_fis_broker_url(cmd = "user_login") %>%
-      httr_get_or_fail() %>%
-      httr::content(as = "text") %>%
+      get_html_as_text(dbg = FALSE) %>%
       extract_single_string(pattern = 'jsessionid=([^?]+)\\?')
   })
 }
