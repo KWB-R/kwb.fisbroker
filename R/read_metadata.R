@@ -18,9 +18,7 @@ read_all_metadata <- function(overview = get_dataset_overview(), dbg = TRUE)
 {
   #kwb.utils::assignPackageObjects("kwb.fisbroker")
   
-  session_id <- kwb.utils::getAttribute(overview, "session_id")
-  
-  urls <- create_info_page_url_from_overview(overview)
+  urls <- create_info_page_url_from_overview(overview[1:3, ], method = 1L)
   
   #metadata_tables <- kwb.utils:::get_cached("metadata_tables")
   
@@ -41,6 +39,8 @@ create_info_page_url_from_overview <- function(
     dbg = TRUE
 )
 {
+  session_id <- kwb.utils::getAttribute(overview, "session_id")
+  
   kwb.utils::catAndRun(
     "Creating URLs to info pages",
     dbg = dbg, 
