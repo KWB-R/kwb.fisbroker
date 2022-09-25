@@ -58,13 +58,18 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_urls</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_urls</span><span class="op">(</span><span class="va">...</span>, key. <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>...</dt>
 <dd><p>further arguments passed to <code><a href="https://rdrr.io/pkg/kwb.utils/man/resolve.html" class="external-link">resolve</a></code></p></dd>
+
+
+<dt>key.</dt>
+<dd><p>optional. Name of element to be returned from the URL dictionary.
+If <code>NULL</code> (the default), the whole dictionary (a list) is returned.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -78,17 +83,56 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fisbroker_urls</span> <span class="op">&lt;-</span> <span class="fu">get_urls</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fisbroker_urls</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $scheme</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $hostname</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "fbinter.stadt-berlin.de"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $base</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://fbinter.stadt-berlin.de"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $do</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $path__gisbroker</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "fb/gisbroker.do"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $path__wfs_data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "fb/wfs/data/senstadt"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $path__wms_data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "fb/wms/data/senstadt"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $path__intern</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "fb/berlin/service_intern.jsp"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $query__result</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "cmd=navigationShowResult&amp;mid=&lt;id&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $query__service</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "cmd=navigationShowService&amp;type=&lt;type&gt;&amp;id=&lt;id&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $query__intern</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "id=&lt;id&gt;@senstadt&amp;type=&lt;type&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $params</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "jsessionid=&lt;sid&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $href_wfs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/&lt;id&gt;?&lt;query__wfs&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $href_wms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://fbinter.stadt-berlin.de/fb/wms/data/senstadt/&lt;id&gt;?&lt;query__wms&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $href_meta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=&lt;id&gt;@senstadt&amp;type=&lt;type&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $href_gisbroker</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://fbinter.stadt-berlin.de/fb/gisbroker.do"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $wfs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $href_name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://fbinter.stadt-berlin.de/fb/gisbroker.do;jsessionid=&lt;sid&gt;?cmd=navigationShowResult&amp;mid=&lt;id&gt;"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $meta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=&lt;id&gt;@senstadt&amp;type=&lt;type&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $href_type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://fbinter.stadt-berlin.de/fb/gisbroker.do;jsessionid=&lt;sid&gt;?cmd=navigationShowService&amp;type=&lt;type&gt;&amp;id=&lt;id&gt;"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
