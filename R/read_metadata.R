@@ -14,8 +14,10 @@ if (FALSE)
 }
 
 # read_all_metadata ------------------------------------------------------------
-read_all_metadata <- function(overview, dbg = TRUE)
+read_all_metadata <- function(overview = get_dataset_overview(), dbg = TRUE)
 {
+  #kwb.utils::assignPackageObjects("kwb.fisbroker")
+  
   session_id <- kwb.utils::getAttribute(overview, "session_id")
   
   urls <- kwb.utils::catAndRun(
@@ -25,24 +27,25 @@ read_all_metadata <- function(overview, dbg = TRUE)
       compose_fis_broker_url(
         cmd = "navigationShowService", 
         session_id = session_id, 
-        type = overview$dataset_type[i],
-        id = utils::URLdecode(overview$dataset_mid[i])
+        type = overview$type[i],
+        id = utils::URLdecode(overview$identifier[i])
       )
     }))
   )
   
   #metadata_tables <- kwb.utils:::get_cached("metadata_tables")
   
-  metadata_tables <- urls %>%
-    lapply(function(url) read_metadata(url = url))
+  metadata_tables <- lapply(urls, function(url) read_metadata(url = url))
   
   #kwb.utils:::cache_and_return(metadata_tables)
   
   metadata_tables %>%
-    stats::setNames(utils::URLdecode(overview$dataset_mid)) %>%
-    kwb.utils::rbindAll("dataset_id") %>%
-    kwb.utils::moveColumnsToFront("dataset_id")
+    stats::setNames(utils::URLdecode(overview$identifier)) %>%
+    kwb.utils::rbindAll("identifier") %>%
+    kwb.utils::moveColumnsToFront("identifier")
 }
+
+# read_metadata ----------------------------------------------------------------
 
 #' Read metadata
 #'
