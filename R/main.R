@@ -4,7 +4,7 @@ if (FALSE)
   
   response <- login_to_fis_broker() %>%
     compose_fis_broker_url(cmd = "navigationFrameResult") %>%
-    httr::GET()
+    httr_get_or_fail()
   
   html_tree <- response %>%
     httr::content(as = "text") %>%
@@ -22,7 +22,7 @@ login_to_fis_broker <- function(dbg = TRUE)
 {
   kwb.utils::catAndRun(dbg = dbg, "Login to FIS-Broker", {
     compose_fis_broker_url(cmd = "user_login") %>%
-      httr::GET() %>%
+      httr_get_or_fail() %>%
       httr::content(as = "text") %>%
       get_session_id()
   })
@@ -33,21 +33,15 @@ compose_fis_broker_url <- function(
     cmd = "user_login", session_id = NULL, type = NULL, id = NULL
 )
 {
-  url <- httr::parse_url(get_urls()$do)
+  url <- httr::parse_url(get_urls(key. = "href_gisbroker"))
   
   url$params <- if (!is.null(session_id)) {
     paste0("jsessionid=", session_id)
   }
   
   url$query$cmd <- cmd
-  
-  url$query$type <- if (!is.null(type)) {
-    type
-  }
-  
-  url$query$id <- if (!is.null(id)) {
-    id
-  }
+  url$query$type <- type
+  url$query$id <- id
 
   httr::build_url(url)
 }
