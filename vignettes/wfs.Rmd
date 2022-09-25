@@ -23,8 +23,10 @@ library(kwb.fisbroker)
 
 dataset_id <- "s_wfs_alkis_bezirk"
 
-berlin_bezirke_metadata <- kwb.fisbroker::read_metadata(dataset_id, 
-                                                        service_type = "WFS")
+berlin_bezirke_metadata <- kwb.fisbroker::read_metadata(
+  dataset_id, 
+  service_type = "WFS"
+)
 
 DT::datatable(berlin_bezirke_metadata)
 ```
