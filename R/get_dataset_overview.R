@@ -1,8 +1,8 @@
 #' Get Dataset Overview 
 #'
 #' @param dbg whether or not to show debug messages
-#' @return tibble with 7 columns and rows equal to number of datasets (
-#' one for each dataset type, e.g WMS, WFS, ATOM) 
+#' @return tibble with 7 columns and rows equal to number of datasets 
+#' (one for each dataset type, e.g WMS, WFS, ATOM) 
 #' \describe{
 #'   \item{category_id}{Category id of dataset (artifically generated)}
 #'   \item{category_name}{Category name of dataset)}
