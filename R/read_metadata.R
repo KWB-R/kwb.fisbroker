@@ -50,7 +50,7 @@ read_all_metadata <- function(
 
   #metadata_tables <- kwb.utils:::get_cached("metadata_tables")
   
-  metadata_tables <- lapply(hrefs, function(href) read_metadata(url = href))
+  metadata_tables <- lapply(hrefs, function(href) read_metadata(url = href, dbg = dbg))
   
   #kwb.utils:::cache_and_return(metadata_tables)
   
