@@ -58,7 +58,11 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_all_metadata</span><span class="op">(</span>overview <span class="op">=</span> <span class="fu"><a href="get_dataset_overview.html">get_dataset_overview</a></span><span class="op">(</span><span class="op">)</span>, dbg <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_all_metadata</span><span class="op">(</span></span>
+<span>  overview <span class="op">=</span> <span class="fu"><a href="get_dataset_overview.html">get_dataset_overview</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  preserve_handle <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  dbg <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -66,6 +70,12 @@
     <dl><dt>overview</dt>
 <dd><p>overview tibble as retrieved by <code><a href="get_dataset_overview.html">get_dataset_overview</a></code>,
 (default: <code><a href="get_dataset_overview.html">get_dataset_overview</a></code>)</p></dd>
+
+
+<dt>preserve_handle</dt>
+<dd><p>logical. If TRUE (the default is FALSE), the Curl
+handle is created in advance and reused for all <code><a href="https://httr.r-lib.org/reference/GET.html" class="external-link">GET</a></code>
+requests.</p></dd>
 
 
 <dt>dbg</dt>
