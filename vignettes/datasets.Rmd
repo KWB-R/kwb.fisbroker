@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-is_ghactions <- identical(Sys.getenv("CI"), "true") && identical(Sys.getenv("GH_ACTIONS_KWB_R"), TRUE)
+is_ghactions <- identical(Sys.getenv("CI"), "true") && nchar(Sys.getenv("GH_ACTIONS_KWB_R") > 0)
 
 ```
 
@@ -24,9 +24,6 @@ is_ghactions <- identical(Sys.getenv("CI"), "true") && identical(Sys.getenv("GH_
 ### By Type
 
 ```{r datasets_stats_type}
-identical(Sys.getenv("CI"), "true")
-identical(Sys.getenv("GH_ACTIONS_KWB_R"), TRUE)
-
 library(kwb.fisbroker)
 
 overview <- kwb.fisbroker::get_dataset_overview()
@@ -112,7 +109,6 @@ metadata_wms <- kwb.fisbroker::read_all_metadata(overview_wms, dbg = FALSE)
 ### Export
 
 ```{r fisbroker_metadata_export, eval = is_ghactions}
-is_ghactions
 ## Only run on KWB-R Github Actions
 kwb.fisbroker::write_to("csv", metadata_atom)
 kwb.fisbroker::write_to("json", metadata_atom)
