@@ -21,6 +21,7 @@ get_urls <- function(..., key. = NULL)
     hostname = "fbinter.stadt-berlin.de",
     base = "<scheme>://<hostname>",
     path__gisbroker = "fb/gisbroker.do",
+    path__atom_feed = "fb/feed/senstadt",
     path__wfs_data = "fb/wfs/data/senstadt",
     path__wms_data = "fb/wms/data/senstadt",
     path__intern = "fb/berlin/service_intern.jsp",
@@ -38,6 +39,7 @@ get_urls <- function(..., key. = NULL)
       type = "<type>"
     ),
     params = "jsessionid=<sid>",
+    href_atom  = "<base>/<path__atom_feed>/<id>?<query__atom>",
     href_wfs  = "<base>/<path__wfs_data>/<id>?<query__wfs>",
     href_wms  = "<base>/<path__wms_data>/<id>?<query__wms>",
     href_meta = "<base>/<path__intern>?<query__intern>",
