@@ -4,11 +4,19 @@
 \alias{read_all_metadata}
 \title{Read Metadata based on Overview on FIS Broker Datasets}
 \usage{
-read_all_metadata(overview = get_dataset_overview(), dbg = TRUE)
+read_all_metadata(
+  overview = get_dataset_overview(),
+  preserve_handle = TRUE,
+  dbg = TRUE
+)
 }
 \arguments{
 \item{overview}{overview tibble as retrieved by \code{\link{get_dataset_overview}},
 (default: \code{\link{get_dataset_overview}})}
+
+\item{preserve_handle}{logical. If TRUE (the default is FALSE), the Curl
+handle is created in advance and reused for all \code{\link[httr]{GET}}
+requests.}
 
 \item{dbg}{whether or not to show debug messages (default: TRUE)}
 }

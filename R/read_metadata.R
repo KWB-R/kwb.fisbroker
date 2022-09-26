@@ -19,6 +19,9 @@ if (FALSE)
 #' 
 #' @param overview overview tibble as retrieved by \code{\link{get_dataset_overview}}, 
 #' (default: \code{\link{get_dataset_overview}})
+#' @param preserve_handle logical. If TRUE (the default is FALSE), the Curl
+#'   handle is created in advance and reused for all \code{\link[httr]{GET}}
+#'   requests.
 #' @param dbg whether or not to show debug messages (default: TRUE)
 #' @return tibble with all metdata information
 #' @export
@@ -37,16 +40,38 @@ if (FALSE)
 #' }
 read_all_metadata <- function(
     overview = get_dataset_overview(), 
+    preserve_handle = TRUE,
     dbg = TRUE
 )
 {
   #kwb.utils::assignPackageObjects("kwb.fisbroker")
+ 
+  # Create full URLs to info pages, based on types and identifiers from overview
+  hrefs <- create_info_page_hrefs(overview)
+
+  # If desired, create Curl handle in advance
+  handle <- if (preserve_handle) {
+    url_bases <- unique(sapply(strsplit(hrefs, ";"), "[", 1L))
+    stopifnot(length(url_bases) == 1L)
+    httr::handle_find(url_bases)
+  } # else NULL implicitly
   
-  overview %>% 
-    create_info_page_hrefs() %>%
-    lapply(function(href) read_metadata(url = href)) %>%
+  # Read metadata for each URL in hrefs
+  lapply(seq_along(hrefs), function(i) {
+    kwb.utils::catAndRun(
+      sprintf(
+        "(%d/%d): Reading metadata for variable '%s'", 
+        i, 
+        length(hrefs), 
+        overview$identifier[i]
+      ),
+      dbg = dbg,
+      expr = read_metadata(url = hrefs[i], handle = handle, dbg = FALSE)
+    )
+  }) %>%
     stats::setNames(utils::URLdecode(overview$identifier)) %>%
     kwb.utils::rbindAll("identifier") %>%
+    columns_to_factor(c("section", "parameter")) %>%
     kwb.utils::moveColumnsToFront("identifier")
 }
 
@@ -114,7 +139,8 @@ read_metadata <- function(
     service_type = "WFS",
     encoding = "Windows-1252",
     dbg = TRUE,
-    url = NULL
+    url = NULL,
+    handle = NULL
 ) 
 {
   if (is.null(url)) {
@@ -128,7 +154,7 @@ read_metadata <- function(
   stopifnot(length(url) == 1L)
   
   url %>%
-    get_html_as_text(dbg = dbg) %>%
+    get_html_as_text(handle = handle, dbg = dbg) %>%
     rvest::read_html(encoding = encoding) %>%
     parse_for_metadata(dbg = dbg)
 }
