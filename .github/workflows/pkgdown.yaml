@@ -12,6 +12,7 @@ jobs:
     runs-on: windows-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GH_ACTIONS_KWB_R: ${{ secrets.GH_ACTIONS_KWB_R }}
     steps:
       - uses: actions/checkout@v2
 

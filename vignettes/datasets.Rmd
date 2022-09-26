@@ -14,18 +14,25 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+is_ghactions <- identical(Sys.getenv("CI"), "true") && identical(Sys.getenv("GH_ACTIONS_KWB_R"), TRUE)
+
 ```
 
-## Dataset Statistics
+## Statistics
 
 ### By Type
 
 ```{r datasets_stats_type}
 library(kwb.fisbroker)
 
-fb_datasets <- kwb.fisbroker::get_dataset_overview()
+overview <- kwb.fisbroker::get_dataset_overview()
 
-fb_datasets %>%  
+overview_atom <- overview[overview$type == "ATOM",]
+overview_wfs <- overview[overview$type == "WFS",]
+overview_wms <- overview[overview$type == "WMS",]
+
+overview %>%  
   dplyr::count(.data$type) %>% 
   dplyr::arrange(dplyr::desc(.data$n)) %>% 
   DT::datatable()
@@ -34,7 +41,7 @@ fb_datasets %>%
 ### By Type and Category
 
 ```{r datasets_stats_typecategory}
-fb_datasets %>%  
+overview %>%  
   dplyr::count(
     .data$type,
     .data$category_name
@@ -44,35 +51,12 @@ fb_datasets %>%
 ```
 
 
-## All Datasets 
+## Types 
 
-### Dataset Names and Types
+### ATOM
 
-```{r fisbroker_datasets_names_and_types}
-fb_datasets %>%  
-  # dplyr::select(
-  #   -.data$dataset_name_href,
-  #   -.data$dataset_type_href
-  # ) %>% 
-  DT::datatable()
-```
-
-### Dataset Links
-
-```{r fisbroker_datasets_links}
-records <- fb_datasets[fb_datasets$type == "WMS", ][1:10, ]
-metadata <- kwb.fisbroker:::read_all_metadata(records)
-
-head(fb_datasets)
-
-kwb.fisbroker:::lookup_dataset_id(
-  overview = fb_datasets, 
-  dataset_id = 3L, 
-  type = "WMS"
-)
-
-fb_datasets %>% 
-  dplyr::filter(.data$type %in% c("WMS", "WFS")) %>%
+```{r datasets_atom}
+overview_atom %>%
   dplyr::select(
     .data$dataset_id,
     .data$dataset_name,
@@ -80,9 +64,94 @@ fb_datasets %>%
     .data$identifier
   ) %>% 
   DT::datatable()
+```  
+
+### WFS
+
+```{r datasets_wfs}
+overview_wfs %>%
+  dplyr::select(
+    .data$dataset_id,
+    .data$dataset_name,
+    .data$type,
+    .data$identifier
+  ) %>% 
+  DT::datatable()
+```  
+
+### WMS
+
+```{r datasets_wms}
+overview_wms %>%
+  dplyr::select(
+    .data$dataset_id,
+    .data$dataset_name,
+    .data$type,
+    .data$identifier
+  ) %>% 
+  DT::datatable()
+```  
+
+
+## Metadata
+
+
+### Fetch 
+
+```{r fisbroker_metadata_fetch, eval = is_ghactions}
+
+## Only run on KWB-R Github Actions
+metadata_atom <- kwb.fisbroker::read_all_metadata(overview_atom, dbg = FALSE)
+metadata_wfs <- kwb.fisbroker::read_all_metadata(overview_wfs, dbg = FALSE)
+metadata_wms <- kwb.fisbroker::read_all_metadata(overview_wms, dbg = FALSE)
+```
+
+### Export
+
+```{r fisbroker_metadata_export, eval = is_ghactions}
+
+## Only run on KWB-R Github Actions
+kwb.fisbroker::write_to("csv", metadata_atom)
+kwb.fisbroker::write_to("json", metadata_atom)
+
+kwb.fisbroker::write_to("csv", metadata_wfs)
+kwb.fisbroker::write_to("json", metadata_wfs)
+
+
+kwb.fisbroker::write_to("csv", metadata_wms)
+kwb.fisbroker::write_to("json", metadata_wms)
+```
+
+
+```{r download, echo = FALSE, results ='asis', eval = is_ghactions}
+files_csv <- list.files(pattern = "^metadata_.*\\.csv$")
+files_json <- list.files(pattern = "^metadata_.*\\.json$")
+
+
+download_csv <- sprintf("CSV:\n\n%s", paste0(
+   sprintf("- [%s](https://kwb-r.github.io/kwb.fisbroker/%s)", files_csv, files_csv),
+   collapse = "\n\n"))
+
+download_json <- sprintf("JSON:\n\n%s", paste0(
+   sprintf("- [%s](https://kwb-r.github.io/kwb.fisbroker/%s)", files_json, files_json),
+   collapse = "\n\n"))
+
+cat(sprintf("### Download\n\n%s\n\n%s", download_csv, download_json))
 ```
 
 ## Details
+
+How do get `dataset_id` for function `kwb.fisbroker::read_wfs()` ?
+
+
+```{r}
+kwb.fisbroker:::lookup_dataset_id(
+  overview = overview, 
+  dataset_id = 3L, 
+  type = "WMS"
+)
+```
+
 
 What happens within `get_dataset_overview()`?
 

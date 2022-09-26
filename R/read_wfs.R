@@ -9,7 +9,7 @@
 #' @param service_version one of "1.0.0", "1.1.0" or "2.0.0" (default: "2.0.0")
 #' @param srs one of "EPSG:4258" or "EPSG:25833" (default: "EPSG:25833")
 #' @param encoding default: UTF-8
-#' @param debug prints debug messages if TRUE (default: TRUE)
+#' @param dbg prints debug messages if TRUE (default: TRUE)
 #' @return imports selected WFS dataset into R
 #' @export
 #' @importFrom fs path_join
@@ -24,7 +24,7 @@ read_wfs <- function(
     service_version = "2.0.0",
     srs = "EPSG:25833",
     encoding = "UTF-8",
-    debug = TRUE
+    dbg = TRUE
 )
 {
   #kwb.utils::assignPackageObjects("kwb.fisbroker")
@@ -40,7 +40,7 @@ read_wfs <- function(
     dataset_id
   )
   
-  kwb.utils::catAndRun(messageText = msg, dbg = debug, expr = {
+  kwb.utils::catAndRun(messageText = msg, dbg = dbg, expr = {
     
     full_url <- get_urls(
       key. = "href_wfs", 

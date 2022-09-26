@@ -134,3 +134,26 @@ write_temp_xml_file <- function(content)
 
   temp_file  
 }
+
+#' Write to JSON or CSV
+#'
+#' @param format either 'json' or 'csv'
+#' @param df data frame
+#'
+#' @return writes provided df to working directory with same name  
+#' @export
+#' @importFrom jsonlite write_json
+#' @importFrom readr write_csv
+write_to <- function(format, df) {
+  df_name <- deparse(substitute(df)) 
+  format <- tolower(format)
+  file <- sprintf("%s.%s", df_name, format)
+  if(format == "json") {
+    jsonlite::write_json(df, file)
+  } else if (format == "csv") {
+    readr::write_csv(df, file)
+  } else {
+    stop("Only export formats 'json' or 'csv' are defined")
+  }
+}
+

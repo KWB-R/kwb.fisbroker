@@ -63,7 +63,7 @@ read_wms <- function(
     typenames = paste0("fis:", dataset_id)
   )
   
-  kwb.utils::catAndRun(msg, dbg = debug, expr = {
+  kwb.utils::catAndRun(msg, dbg = dbg, expr = {
     
     full_url <- get_urls(
       key. = "href_wms", 
