@@ -9,7 +9,8 @@ read_metadata(
   service_type = "WFS",
   encoding = "Windows-1252",
   dbg = TRUE,
-  url = NULL
+  url = NULL,
+  handle = NULL
 )
 }
 \arguments{
