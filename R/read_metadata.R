@@ -14,34 +14,38 @@ if (FALSE)
 }
 
 # read_all_metadata ------------------------------------------------------------
+
+#' Read Metadata based on Overview on FIS Broker Datasets
+#' 
+#' @param overview data frame as returned by
+#'   \code{kwb.fisbroker:::get_dataset_overview}
+#' @param dbg whether or not to show debug messages
+#' @importFrom kwb.utils moveColumnsToFront rbindAll
+#' @importFrom stats setNames
+#' @importFrom utils URLdecode
 read_all_metadata <- function(
     overview = get_dataset_overview(), 
-    dbg = TRUE, 
-    method = 1L
+    dbg = TRUE
 )
 {
   #kwb.utils::assignPackageObjects("kwb.fisbroker")
   
-  hrefs <- create_info_page_hrefs(overview, method = method)
-
-  #metadata_tables <- kwb.utils:::get_cached("metadata_tables")
-  
-  metadata_tables <- lapply(hrefs, function(href) read_metadata(url = href))
-  
-  #kwb.utils:::cache_and_return(metadata_tables)
-  
-  metadata_tables %>%
+  metadata_tables <- overview %>% 
+    create_info_page_hrefs() %>%
+    lapply(function(href) read_metadata(url = href)) %>%
     stats::setNames(utils::URLdecode(overview$identifier)) %>%
     kwb.utils::rbindAll("identifier") %>%
     kwb.utils::moveColumnsToFront("identifier")
 }
 
 # create_info_page_hrefs -------------------------------------------------------
-create_info_page_hrefs <- function(
-    overview, 
-    method = 2L, 
-    dbg = TRUE
-)
+
+#' Create Full URLs to Info Pages about Datasets in Overview Table
+#' 
+#' @inheritParams read_all_metadata
+#' @importFrom kwb.utils catAndRund getAttribute multiSubstitute
+#' @importFrom utils URLencode
+create_info_page_hrefs <- function(overview, dbg = TRUE)
 {
   session_id <- kwb.utils::getAttribute(overview, "session_id")
   
@@ -49,20 +53,9 @@ create_info_page_hrefs <- function(
     "Creating URLs to info pages",
     dbg = dbg, 
     expr = {
-      if (method == 1L) {
-        unlist(lapply(seq_len(nrow(overview)), function(i) {
-          compose_fis_broker_url(
-            cmd = "navigationShowService", 
-            session_id = session_id, 
-            type = overview$type[i],
-            id = utils::URLdecode(overview$identifier[i])
-          )
-        }))
-      } else if (method == 2L) {
-        get_urls(key. = "href_type", sid = session_id) %>% 
-          kwb.utils::multiSubstitute(list("<(type|id)>" = "%s")) %>%
-          sprintf(overview$type, utils::URLencode(overview$identifier))
-      }
+      get_urls(key. = "href_type", sid = session_id) %>% 
+        kwb.utils::multiSubstitute(list("<(type|id)>" = "%s")) %>%
+        sprintf(overview$type, utils::URLencode(overview$identifier))
     }
   )
 }
