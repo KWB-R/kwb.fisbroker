@@ -144,7 +144,7 @@ cat(sprintf("### Download\n\n%s\n\n%s", download_csv, download_json))
 How do get `dataset_id` for function `kwb.fisbroker::read_wfs()` ?
 
 
-```{r}
+```{r details_1, eval = is_ghactions}
 overview <- kwb.fisbroker::get_dataset_overview() 
 
 kwb.fisbroker:::lookup_dataset_id(
@@ -157,7 +157,7 @@ kwb.fisbroker:::lookup_dataset_id(
 
 What happens within `get_dataset_overview()`?
 
-```{r}
+```{r details_2, eval = is_ghactions}
 library(kwb.fisbroker)
 
 response <- login_to_fis_broker() %>%
