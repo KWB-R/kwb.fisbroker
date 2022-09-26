@@ -121,6 +121,12 @@ to_query_string <- function(...)
   paste0(names(x), "=", as.character(x), collapse = "&")
 }
 
+# trim_end_of_lines ------------------------------------------------------------
+trim_end_of_lines <- function(x)
+{
+  gsub("(^\r\n)|(\r\n$)", "", x)
+}
+
 # write_temp_xml_file ----------------------------------------------------------
 
 #' @importFrom xml2 write_xml

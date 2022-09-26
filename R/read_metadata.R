@@ -210,6 +210,7 @@ table_to_data_frame <- function(table_node, dbg = TRUE)
   data <- table_fields %>%
     unlist() %>%
     replace_non_breaking_spaces() %>%
+    trim_end_of_lines() %>%
     matrix(ncol = 2L, byrow = TRUE) %>%
     kwb.utils::asNoFactorDataFrame() %>%
     stats::setNames(c("parameter", "value"))
