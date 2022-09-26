@@ -109,7 +109,7 @@ metadata_wms <- kwb.fisbroker::read_all_metadata(overview_wms, dbg = FALSE)
 ### Export
 
 ```{r fisbroker_metadata_export, eval = is_ghactions}
-
+is_ghactions
 ## Only run on KWB-R Github Actions
 kwb.fisbroker::write_to("csv", metadata_atom)
 kwb.fisbroker::write_to("json", metadata_atom)
