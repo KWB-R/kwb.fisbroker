@@ -5,7 +5,6 @@
 #' @return session id
 #' @export
 #' @importFrom kwb.utils catAndRun
-#' @importFrom httr content GET
 #' @examples
 #' login_to_fis_broker()
 #' 
