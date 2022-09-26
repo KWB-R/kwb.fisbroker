@@ -2,16 +2,20 @@
 % Please edit documentation in R/lookup_dataset_id.R
 \name{lookup_dataset_id}
 \alias{lookup_dataset_id}
-\title{Lookup ID Required for Download}
+\title{Lookup Dataset ID Required for Download}
 \usage{
 lookup_dataset_id(overview, dataset_id, type)
 }
 \arguments{
-\item{overview}{data frame as returned by
-\code{kwb.fisbroker:::get_dataset_overview}}
+\item{overview}{overview tibble as retrieved by \code{\link{get_dataset_overview}}}
+
+\item{dataset_id}{one dataset_id from column "dataset_id" of provided overview}
 
 \item{type}{dataset type, i.e. "ATOM", "WFS" or "WMS"}
 }
+\value{
+dataset id required for \code{\link{read_wfs}}
+}
 \description{
-Lookup ID Required for Download
+Lookup Dataset ID Required for Download
 }

@@ -9,7 +9,7 @@ read_wfs(
   service_version = "2.0.0",
   srs = "EPSG:25833",
   encoding = "UTF-8",
-  debug = TRUE
+  dbg = TRUE
 )
 }
 \arguments{
@@ -28,7 +28,7 @@ of the url is the required dataset id!
 
 \item{encoding}{default: UTF-8}
 
-\item{debug}{prints debug messages if TRUE (default: TRUE)}
+\item{dbg}{prints debug messages if TRUE (default: TRUE)}
 }
 \value{
 imports selected WFS dataset into R

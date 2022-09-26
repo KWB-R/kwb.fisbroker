@@ -4,13 +4,16 @@
 \alias{create_info_page_hrefs}
 \title{Create Full URLs to Info Pages about Datasets in Overview Table}
 \usage{
-create_info_page_hrefs(overview, dbg = TRUE)
+create_info_page_hrefs(overview, method = 2L, dbg = TRUE)
 }
 \arguments{
-\item{overview}{data frame as returned by
-\code{kwb.fisbroker:::get_dataset_overview}}
+\item{overview}{overview tibble as retrieved by \code{\link{get_dataset_overview}},
+(default: \code{\link{get_dataset_overview}})}
 
-\item{dbg}{whether or not to show debug messages}
+\item{dbg}{whether or not to show debug messages (default: TRUE)}
+}
+\value{
+vector with hrefs
 }
 \description{
 Create Full URLs to Info Pages about Datasets in Overview Table

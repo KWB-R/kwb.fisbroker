@@ -7,11 +7,25 @@
 read_all_metadata(overview = get_dataset_overview(), dbg = TRUE)
 }
 \arguments{
-\item{overview}{data frame as returned by
-\code{kwb.fisbroker:::get_dataset_overview}}
+\item{overview}{overview tibble as retrieved by \code{\link{get_dataset_overview}},
+(default: \code{\link{get_dataset_overview}})}
 
-\item{dbg}{whether or not to show debug messages}
+\item{dbg}{whether or not to show debug messages (default: TRUE)}
+}
+\value{
+tibble with all metdata information
 }
 \description{
 Read Metadata based on Overview on FIS Broker Datasets
+}
+\examples{
+\dontrun{
+overview <- kwb.fisbroker::get_dataset_overview()
+overview_atom <- overview[overview$type == "ATOM",]
+metadata_atom <- kwb.fisbroker::read_all_metadata(overview_atom)
+overview_wfs <- overview[overview$type == "WFS",]
+metadata_wfs <- kwb.fisbroker::read_all_metadata(overview_wfs)
+overview_wms <- overview[overview$type == "WMS",]
+metadata_wms <- kwb.fisbroker::read_all_metadata(overview_wms)
+}
 }
