@@ -43,7 +43,7 @@ read_all_metadata <- function(
 #' Create Full URLs to Info Pages about Datasets in Overview Table
 #' 
 #' @inheritParams read_all_metadata
-#' @importFrom kwb.utils catAndRund getAttribute multiSubstitute
+#' @importFrom kwb.utils catAndRun getAttribute multiSubstitute
 #' @importFrom utils URLencode
 create_info_page_hrefs <- function(overview, dbg = TRUE)
 {
