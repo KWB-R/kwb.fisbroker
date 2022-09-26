@@ -18,6 +18,7 @@
 #' @export
 #' @importFrom dplyr arrange bind_rows filter full_join left_join mutate select
 #' @importFrom kwb.utils extractSubstring moveColumnsToFront
+#' @importFrom rlang .data
 #' @importFrom rvest html_attr html_element html_elements html_text read_html
 #' @importFrom stats setNames
 #' @importFrom tibble tibble

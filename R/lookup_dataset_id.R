@@ -7,6 +7,7 @@
 #' @param type dataset type, i.e. "ATOM", "WFS" or "WMS"
 #' @importFrom dplyr filter pull
 #' @importFrom kwb.utils createAccessor getAttribute selectColumns stopFormatted
+#' @importFrom rlang .data
 #' @return dataset id required for \code{\link{read_wfs}}
 #' @export
 lookup_dataset_id <- function(overview, dataset_id, type)

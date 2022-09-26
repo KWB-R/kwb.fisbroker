@@ -27,7 +27,6 @@ Imports:
     rlang,
     rvest,
     sf,
-    stringr,
     tibble,
     tidyr,
     xml2
