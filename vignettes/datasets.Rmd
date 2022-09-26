@@ -26,7 +26,8 @@ is_ghactions <- identical(Sys.getenv("CI"), "true") && nchar(Sys.getenv("GH_ACTI
 ```{r datasets_stats_type}
 library(kwb.fisbroker)
 
-overview <- kwb.fisbroker::get_dataset_overview()
+overview <- kwb.fisbroker::get_dataset_overview() %>% 
+  dplyr::filter(.data$cmd == "navigationShowService") 
 
 overview_atom <- overview[overview$type == "ATOM",]
 overview_wfs <- overview[overview$type == "WFS",]
@@ -144,6 +145,8 @@ How do get `dataset_id` for function `kwb.fisbroker::read_wfs()` ?
 
 
 ```{r}
+overview <- kwb.fisbroker::get_dataset_overview() 
+
 kwb.fisbroker:::lookup_dataset_id(
   overview = overview, 
   dataset_id = 3L, 
