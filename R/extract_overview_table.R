@@ -44,7 +44,7 @@ extract_overview_table <- function(html_tree)
 #' @noMd
 #' @noRd
 #' @importFrom kwb.utils allAreEqual allAreIdentical moveColumnsToFront 
-#' @importFrom kwb.utils naToLastNonNa toFactor
+#' @importFrom kwb.utils naToLastNonNa
 #' @importFrom stats setNames 
 clean_overview <- function(overview)
 {
@@ -56,11 +56,6 @@ clean_overview <- function(overview)
   
   overview <- overview[!is_header, 1:3] %>%
     stats::setNames(c("name", "formats", "topic")) %>%
-    kwb.utils::moveColumnsToFront(c("topic"))
-  
-  overview$topic <- kwb.utils::toFactor(overview$topic)
-  
-  overview$formats <- kwb.utils::toFactor(overview$formats)
-  
-  overview
+    columns_to_factor(c("formats", "topic")) %>%
+    kwb.utils::moveColumnsToFront("topic")
 }
