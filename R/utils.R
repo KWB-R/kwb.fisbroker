@@ -69,15 +69,14 @@ get_charset <- function(html_text)
 #' @keywords internal
 #' @noMd
 #' @noRd
-#' @importFrom httr GET content
+#' @importFrom httr content
 #' @importFrom kwb.utils catAndRun
 get_html_as_text <- function(url, dbg = TRUE)
 {
   msg <- sprintf("Getting HTML text from '%s'", kwb.utils::shorten(url, 50L))
   
   kwb.utils::catAndRun(msg, dbg = dbg, expr = {
-    url %>%
-      httr_get_or_fail() %>%
+    httr_get_or_fail(url) %>%
       httr::content(as = "text")
   })
 }
@@ -123,6 +122,8 @@ to_query_string <- function(...)
 }
 
 # write_temp_xml_file ----------------------------------------------------------
+
+#' @importFrom xml2 write_xml
 write_temp_xml_file <- function(content)
 {
   temp_file <-   fs::path_join(c(

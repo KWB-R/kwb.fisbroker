@@ -9,8 +9,8 @@
 #' @noMd
 #' @noRd
 #' @importFrom kwb.utils setColumns
+#' @importFrom rvest html_attr html_nodes html_table
 #' @importFrom utils URLdecode 
-#' @importFrom rvest html_nodes html_table
 extract_overview_table <- function(html_tree)
 {
   nav_tables <- html_tree %>%
@@ -44,7 +44,7 @@ extract_overview_table <- function(html_tree)
 #' @noMd
 #' @noRd
 #' @importFrom kwb.utils allAreEqual allAreIdentical moveColumnsToFront 
-#' naToLastNonNa toFactor
+#' @importFrom kwb.utils naToLastNonNa toFactor
 #' @importFrom stats setNames 
 clean_overview <- function(overview)
 {

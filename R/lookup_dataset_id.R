@@ -1,4 +1,12 @@
 # lookup_dataset_id ------------------------------------------------------------
+
+#' Lookup ID Required for Download
+#' 
+#' @param overview data frame as returned by
+#'   \code{kwb.fisbroker:::get_dataset_overview}
+#' @param type dataset type, i.e. "ATOM", "WFS" or "WMS"
+#' @importFrom dplyr filter pull
+#' @importFrom kwb.utils createAccessor getAttribute selectColumns stopFormatted
 lookup_dataset_id <- function(overview, dataset_id, type)
 {
   fetch <- kwb.utils::createAccessor(overview)

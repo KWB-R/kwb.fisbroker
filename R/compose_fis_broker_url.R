@@ -7,7 +7,7 @@
 #' @param id dataset id (default: NULL)
 #' @return composed FIS-Broker URL
 #' @export
-#' @importFrom httr build_url
+#' @importFrom httr build_url parse_url
 # compose_fis_broker_url -------------------------------------------------------
 compose_fis_broker_url <- function(
     cmd = "user_login", session_id = NULL, type = NULL, id = NULL

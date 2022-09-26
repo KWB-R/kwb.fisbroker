@@ -16,10 +16,11 @@
 #'   with a placeholder} 
 #' } 
 #' @export
-#' @importFrom dplyr arrange bind_rows full_join left_join relocate
-#' @importFrom httr GET content 
-#' @importFrom rvest html_element read_html
+#' @importFrom dplyr arrange bind_rows filter full_join left_join mutate select
+#' @importFrom kwb.utils extractSubstring moveColumnsToFront
+#' @importFrom rvest html_attr html_element html_elements html_text read_html
 #' @importFrom stats setNames
+#' @importFrom tibble tibble
 #' @importFrom tidyr fill
 #' @examples
 #' fb_dataset_overview <- kwb.fisbroker::get_dataset_overview()
@@ -39,10 +40,7 @@ get_dataset_overview <- function(dbg = TRUE)
     rvest::html_element(css = "table.nav_tabelle") %>%
     rvest::html_elements(css = "tr")
   
-  is_category <- stringr::str_detect(
-    as.character(table_rows), 
-    "class=\"kategorie\""
-  )
+  is_category <- grepl("class=\"kategorie\"", as.character(table_rows))
   
   to_id_name <- function(is_selected, prefix) {
     do.call(tibble::tibble, args = stats::setNames(

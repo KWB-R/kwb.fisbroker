@@ -12,10 +12,10 @@
 #' @param debug prints debug messages if TRUE (default: TRUE)
 #' @return imports selected WFS dataset into R
 #' @export
-#' @importFrom fs path_join
-#' @importFrom httr build_url content parse_url
+#' @importFrom httr::content
+#' @importFrom kwb.utils catAndRun
 #' @importFrom sf read_sf
-#' @importFrom xml2 write_xml
+#' @importFrom utils URLencode
 #' @seealso \url{https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=s_wfs_alkis_bezirk@@senstadt&type=WFS}
 #' @examples
 #' berlin_bezirke <- kwb.fisbroker::read_wfs(dataset_id = "s_wfs_alkis_bezirk")
@@ -45,7 +45,7 @@ read_wfs <- function(
     full_url <- get_urls(
       key. = "href_wfs", 
       id = dataset_id,
-      query__wfs = utils::URLencode(to_query_string(      
+      query__wfs = utils::URLencode(to_query_string(
         service = service_type,
         version = service_version,
         request = "GetFeature",

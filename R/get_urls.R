@@ -5,11 +5,15 @@
 #'   If \code{NULL} (the default), the whole dictionary (a list) is returned. 
 #' @return return `base` and `wfs` urls of FIS-Broker
 #' @export
-#' @importFrom kwb.utils resolve
+#' @importFrom kwb.utils resolve selectElements
 #' @examples
-#' fisbroker_urls <- get_urls()
-#' fisbroker_urls
-#'
+#' # List of all defined (partial) URls
+#' get_urls()
+#' 
+#' # One specific URL with placeholders replaced as given
+#' get_urls(
+#'   key. = "href_type", sid = "my-session-id", type = "WFS", id = "my-id"
+#' )
 get_urls <- function(..., key. = NULL)
 {
   dictionary <- list(
