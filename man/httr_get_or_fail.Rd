@@ -4,10 +4,12 @@
 \alias{httr_get_or_fail}
 \title{GET Request with Check for Error}
 \usage{
-httr_get_or_fail(url)
+httr_get_or_fail(url, handle = NULL)
 }
 \arguments{
 \item{url}{URL to which to send a GET request}
+
+\item{handle}{passed to \code{\link[httr]{GET}}}
 }
 \value{
 If the status was not 200, the function returns what

@@ -64,19 +64,21 @@ get_charset <- function(html_text)
 # get_html_as_text -------------------------------------------------------------
 
 #' Get HTML as Text
+#' 
 #' @param url url
+#' @param handle passed to \code{\link[httr]{GET}}
 #' @param dbg dbg
 #' @keywords internal
 #' @noMd
 #' @noRd
 #' @importFrom httr content
 #' @importFrom kwb.utils catAndRun
-get_html_as_text <- function(url, dbg = TRUE)
+get_html_as_text <- function(url, handle = NULL, dbg = TRUE)
 {
   msg <- sprintf("Getting HTML text from '%s'", kwb.utils::shorten(url, 50L))
   
   kwb.utils::catAndRun(msg, dbg = dbg, expr = {
-    httr_get_or_fail(url) %>%
+    httr_get_or_fail(url, handle) %>%
       httr::content(as = "text")
   })
 }
@@ -88,13 +90,14 @@ get_html_as_text <- function(url, dbg = TRUE)
 #' The function stops with error if the GET request returns status != 200
 #' 
 #' @param url URL to which to send a GET request
+#' @param handle passed to \code{\link[httr]{GET}}
 #' @return If the status was not 200, the function returns what 
 #' \code{\link[httr]{GET}} returned
 #' @importFrom httr GET status_code
 #' @export
-httr_get_or_fail <- function(url)
+httr_get_or_fail <- function(url, handle = NULL)
 {
-  response <- httr::GET(url)
+  response <- httr::GET(url, handle = handle)
   
   if (httr::status_code(response) != "200") {
     stop(sprintf("Request '%s' failed", url))
