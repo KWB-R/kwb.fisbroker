@@ -31,6 +31,9 @@
     <loc>https://kwb-r.github.io/kwb.fisbroker/reference/compose_fis_broker_url.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.fisbroker/reference/create_info_page_hrefs.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.fisbroker/reference/get_dataset_overview.html</loc>
   </url>
   <url>
@@ -46,12 +49,21 @@
     <loc>https://kwb-r.github.io/kwb.fisbroker/reference/login_to_fis_broker.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.fisbroker/reference/lookup_dataset_id.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.fisbroker/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.fisbroker/reference/read_all_metadata.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.fisbroker/reference/read_metadata.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.fisbroker/reference/read_wfs.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.fisbroker/reference/write_to.html</loc>
   </url>
 </urlset>
