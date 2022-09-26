@@ -4,7 +4,7 @@
 \alias{create_info_page_hrefs}
 \title{Create Full URLs to Info Pages about Datasets in Overview Table}
 \usage{
-create_info_page_hrefs(overview, method = 2L, dbg = TRUE)
+create_info_page_hrefs(overview, dbg = TRUE)
 }
 \arguments{
 \item{overview}{overview tibble as retrieved by \code{\link{get_dataset_overview}},
