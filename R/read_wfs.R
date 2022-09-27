@@ -55,7 +55,7 @@ read_wfs <- function(
     )
     
     content <- httr_get_or_fail(full_url) %>%
-      httr::content(encoding = encoding, options = "Huge")
+      httr::content(encoding = encoding, options = "HUGE")
     
     temp_file <- write_temp_xml_file(content)
 
