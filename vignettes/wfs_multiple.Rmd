@@ -1,0 +1,91 @@
+---
+title: "Read WFS Datasets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Read WFS Datasets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Define Helper Functions
+
+```{r helpers}
+library(kwb.fisbroker)
+
+get_id <- function(data) {
+  data %>%
+    dplyr::filter(.data$parameter %in% c("Rechneradresse",
+                                         "ATOM-Feed-Url")) %>%
+    dplyr::mutate(id = basename(.data$value))
+}
+
+
+get_metadata_from_ghpages <- function() {
+  paths_list <- list(
+    base_url = "https://kwb-r.github.io/kwb.fisbroker/metadata_",
+    file_format = ".json",
+    atom = "<base_url>atom<file_format>",
+    wfs =  "<base_url>wfs<file_format>",
+    wms =  "<base_url>wms<file_format>"
+  )
+  
+  paths <- kwb.utils::resolve(paths_list)
+  
+  
+  meta_paths <- paths[names(paths) %in% c("atom", "wfs", "wms")]
+  
+  
+  stats::setNames(lapply(meta_paths, function(path) {
+    jsonlite::read_json(path, simplifyVector = TRUE) %>%
+      get_id()
+  }), names(meta_paths))
+  
+}
+```
+
+## Metdata
+
+```{r read_metadata}
+meta <- get_metadata_from_ghpages()
+str(meta)
+
+overview <- kwb.fisbroker::get_dataset_overview()
+str(overview)
+
+### There are more "overview" identifiers than "ids" (i.e. WFS files). Thus multiple
+### identifiers use the same WFS
+### (limit to 2 categories: "Umweltbeobachtung" and "Umweltschutz")
+meta_wfs <- meta$wfs %>%
+  dplyr::left_join(overview) %>%
+  dplyr::filter(category_name %in% c("Umweltbeobachtung", "Umweltschutz"))
+str(meta_wfs)
+nrow(meta_wfs)
+
+ids <- unique(meta_wfs$id)[order(unique(meta_wfs$id))]
+length(ids)
+```
+
+## Multiple WFS Datasets
+
+### Read 
+
+```{r multiple_wfs_read, eval = FALSE}
+data_wfs <- stats::setNames(lapply(ids, function(id) {
+  kwb.fisbroker::read_wfs(dataset_id = id)
+}), ids)
+```
+
+### Check
+
+data structure
+
+```{r multiple_wfs_check, eval = FALSE}
+str(data_wfs, 1)
+```
