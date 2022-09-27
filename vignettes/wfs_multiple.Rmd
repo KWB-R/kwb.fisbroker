@@ -48,6 +48,27 @@ get_metadata_from_ghpages <- function() {
   }), names(meta_paths))
   
 }
+
+write_wfs_as <- function(format = "nc", #use netCDF as default! 
+                         data_wfs,
+                         target_dir = tempdir(),
+                         dbg = TRUE) {
+  
+fs::dir_create(target_dir)
+
+lapply(seq_len(length(data_wfs)), function(i) {
+  id <- names(data_wfs)[i]
+  file <- sprintf("%s/%s.%s", fs::path_abs(target_dir), id, format)
+  kwb.utils::catAndRun(messageText = sprintf("Exporting (%d/%d): '%s' to '%s'",
+                       i, 
+                       length(data_wfs),
+                       id, 
+                       file),
+                       expr = {sf::st_write(data_wfs[[i]], file)},
+                       dbg = dbg)
+})
+}
+
 ```
 
 ## Metdata
@@ -88,4 +109,19 @@ data structure
 
 ```{r multiple_wfs_check, eval = FALSE}
 str(data_wfs, 1)
+```
+
+### Export 
+
+```{r multiple_wfs_export, eval = FALSE}
+
+write_wfs_as(format = "shp", data_wfs = data_wfs)
+# Exporting (19/76): 's_04_08_1lniederschl_bl_8110' to 'C:/Users/mrustl/Documents/RProjects/kwb.fisbroker/vignettes/shapefiles/s_04_08_1lniederschl_bl_8110.shp' ... Warnung: Field names abbreviated for ESRI Shapefile driverWriting layer `s_04_08_1lniederschl_bl_8110' to data source 
+#   `C:/Users/mrustl/Documents/RProjects/kwb.fisbroker/vignettes/shapefiles/s_04_08_1lniederschl_bl_8110.shp' using driver `ESRI Shapefile'
+# Warnung: GDAL Message 6: Normalized/laundered field name: 'rgn_8110_ww_j' to 'rgn_8110_w'Warnung: GDAL Message 6: Normalized/laundered field name: 'rgn_8110_ww_s' to 'rgn_8110_1'Warnung: GDAL Message 6: Normalized/laundered field name: 'rgn_8110_ww_w' to 'rgn_8110_2'Writing 25352 features with 4 fields and geometry type Multi Polygon.
+# Unknown field name `rgn_8110_ww_j': updating a layer with improper field name(s)?
+# Error in CPL_write_ogr(obj, dsn, layer, driver, as.character(dataset_options), 
+
+write_wfs_as(format = "nc", data_wfs = data_wfs, target_dir = "./netCDF")
+
 ```
