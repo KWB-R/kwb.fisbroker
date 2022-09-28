@@ -168,8 +168,8 @@
 <span><span class="co">#&gt;   ..$ id        : chr [1:509] "k_adressenberlin" "AD_AdressenBerlin_K" "k_rbs_adr" "wmsk_afis" ...</span></span>
 <span></span>
 <span><span class="va">overview</span> <span class="op">&lt;-</span> <span class="fu">kwb.fisbroker</span><span class="fu">::</span><span class="fu"><a href="../reference/get_dataset_overview.html">get_dataset_overview</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Login to FIS-Broker ... ok. (2.35s) </span></span>
-<span><span class="co">#&gt; Getting HTML text from 'https://fbinter.stadt-be...d=navigationFrameResult' ... ok. (1.60s)</span></span>
+<span><span class="co">#&gt; Login to FIS-Broker ... ok. (2.82s) </span></span>
+<span><span class="co">#&gt; Getting HTML text from 'https://fbinter.stadt-be...d=navigationFrameResult' ... ok. (1.31s)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">overview</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    1840 obs. of  7 variables:</span></span>
 <span><span class="co">#&gt;  $ category_id  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
@@ -179,7 +179,7 @@
 <span><span class="co">#&gt;  $ cmd          : Factor w/ 2 levels "navigationShowResult",..: 1 2 1 2 1 2 2 2 1 2 ...</span></span>
 <span><span class="co">#&gt;  $ type         : Factor w/ 4 levels "","ATOM","WMS",..: 1 2 1 2 1 3 4 2 1 3 ...</span></span>
 <span><span class="co">#&gt;  $ identifier   : chr  "K.lod1%40senstadt" "K.lod1@senstadt" "K.lod2%40senstadt" "K.lod2@senstadt" ...</span></span>
-<span><span class="co">#&gt;  - attr(*, "session_id")= chr "F8E155FC8414F5AE5FF6D97EFB524277"</span></span>
+<span><span class="co">#&gt;  - attr(*, "session_id")= chr "2CB3D9F1A2C77DE4801685319765A3E7"</span></span>
 <span></span>
 <span><span class="co">### There are more "overview" identifiers than "ids/urls" (i.e. WFS files). T</span></span>
 <span><span class="co">### Thus multiple identifiers use the same WFS</span></span>
@@ -214,7 +214,7 @@
 <div class="section level2">
 <h2 id="multiple-wfs-datasets">Multiple WFS Datasets<a class="anchor" aria-label="anchor" href="#multiple-wfs-datasets"></a>
 </h2>
-<p>The code below <a href="#read">reads</a> (into R as <code>sf</code> object), <a href="#check">checks</a> (the R data structure) and <a href="#exports">exports</a> (to <code>NetCDF</code>) 76 WFS datasets (out of in total 403 available at <a href="https://fbinter.stadt-berlin.de/fb/index.jsp" class="external-link">FIS-Broker</a>.</p>
+<p>The code below <a href="#read">reads</a> (into R as <code>sf</code> object), <a href="#check">checks</a> (the R data structure) and <a href="#exports">exports</a> (to <code>NetCDF</code>) 76 WFS datasets (out of in total 214 available at <a href="https://fbinter.stadt-berlin.de/fb/index.jsp" class="external-link">FIS-Broker</a>.</p>
 <div class="section level3">
 <h3 id="read">Read<a class="anchor" aria-label="anchor" href="#read"></a>
 </h3>

@@ -2612,22 +2612,6 @@ K.k_kep@senstadt,Technische Angaben,Operationen,GetFeature
 K.k_kep@senstadt,Technische Angaben,Ausgabeformate,text/xml; subtype=gml/2.1.2
 K.k_kep@senstadt,Technische Angaben,Ausgabeformate,text/xml; subtype=gml/3.1.1
 K.k_kep@senstadt,Technische Angaben,Ausgabeformate,text/xml; subtype=gml/3.2.1
-K.wmsk_forst_FSC2014@senstadt,Naturwaldentwicklungsflächen nach FSC-Zertifizierung,Kurzbeschreibung,Naturwaldentwicklungsflächen nach FSC/Naturland bei den Berliner Forsten.
-K.wmsk_forst_FSC2014@senstadt,Naturwaldentwicklungsflächen nach FSC-Zertifizierung,Koordinatensysteme,EPSG:25833
-K.wmsk_forst_FSC2014@senstadt,Naturwaldentwicklungsflächen nach FSC-Zertifizierung,Ausdehnung,"EPSG:25833: 312979, 5784756, 427766, 5860098"
-K.wmsk_forst_FSC2014@senstadt,Naturwaldentwicklungsflächen nach FSC-Zertifizierung,Nutzungsbedingungen,"Für die Nutzung der Daten ist die  Datenlizenz Deutschland - Namensnennung - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/by-2-0 abrufbar. Der Quellenvermerk gemäß (2)  der Lizenz lautet ""Geoportal Berlin / [Titel des Datensatzes]""."
-K.wmsk_forst_FSC2014@senstadt,Naturwaldentwicklungsflächen nach FSC-Zertifizierung,Zugriffsbeschränkungen,Es gelten keine Zugriffsbeschränkungen
-K.wmsk_forst_FSC2014@senstadt,Technische Angaben,Rechneradresse,https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/wfs_forst_FSC2014
-K.wmsk_forst_FSC2014@senstadt,Technische Angaben,Standard,WFS
-K.wmsk_forst_FSC2014@senstadt,Technische Angaben,Version,1.0.0
-K.wmsk_forst_FSC2014@senstadt,Technische Angaben,Version,1.1.0
-K.wmsk_forst_FSC2014@senstadt,Technische Angaben,Version,2.0.0
-K.wmsk_forst_FSC2014@senstadt,Technische Angaben,Operationen,GetCapabilities
-K.wmsk_forst_FSC2014@senstadt,Technische Angaben,Operationen,DescribeFeatureType
-K.wmsk_forst_FSC2014@senstadt,Technische Angaben,Operationen,GetFeature
-K.wmsk_forst_FSC2014@senstadt,Technische Angaben,Ausgabeformate,text/xml; subtype=gml/2.1.2
-K.wmsk_forst_FSC2014@senstadt,Technische Angaben,Ausgabeformate,text/xml; subtype=gml/3.1.1
-K.wmsk_forst_FSC2014@senstadt,Technische Angaben,Ausgabeformate,text/xml; subtype=gml/3.2.1
 K.wmsk_forst_verwalt2014@senstadt,Verwaltungseinheiten der Berliner Forsten,Kurzbeschreibung,"Verwaltungseinheiten der Berliner Forsten. Ein Forstamt wird darin in Reviere und Distrikte unterteilt. Ein Distrikt wird in Abteilungen, Unterabteilungen und Bestandseinheiten untergliedert."
 K.wmsk_forst_verwalt2014@senstadt,Verwaltungseinheiten der Berliner Forsten,Koordinatensysteme,EPSG:25833
 K.wmsk_forst_verwalt2014@senstadt,Verwaltungseinheiten der Berliner Forsten,Ausdehnung,"EPSG:25833: 312979, 5784756, 427766, 5860098"
