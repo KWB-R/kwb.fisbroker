@@ -92,7 +92,6 @@ str(meta_wfs)
 nrow(meta_wfs)
 
 urls <- unique(meta_wfs$url)[order(unique(meta_wfs$url))]
-urls <- urls[!basename(urls) %in% kwb.utils::removeExtension(list.files(path = "netCDF"))]
 
 length(urls)
 ```
