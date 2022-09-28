@@ -6,6 +6,7 @@
 \usage{
 read_wfs(
   dataset_id = "s_wfs_alkis_bezirk",
+  url = NULL,
   service_version = "2.0.0",
   srs = "EPSG:25833",
   encoding = "UTF-8",
@@ -21,6 +22,9 @@ checked out manually as described below:
 \item Read the content of \code{Rechneraddresse} in the opened tab. The basename
 of the url is the required dataset id!
 }}
+
+\item{url}{full url to computer adress ("Rechneradresse"), if NULL url will be
+generated from dataset_id (default: NULL)}
 
 \item{service_version}{one of "1.0.0", "1.1.0" or "2.0.0" (default: "2.0.0")}
 

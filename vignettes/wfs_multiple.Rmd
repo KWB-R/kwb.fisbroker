@@ -1,0 +1,137 @@
+---
+title: "Read WFS Datasets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Read WFS Datasets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Define Helper Functions
+
+```{r helpers}
+library(kwb.fisbroker)
+
+get_id <- function(data) {
+  data %>%
+    dplyr::filter(.data$parameter %in% c("Rechneradresse",
+                                         "ATOM-Feed-Url")) %>%
+    dplyr::mutate(url = .data$value, 
+                  id = basename(.data$value))
+}
+
+
+get_metadata_from_ghpages <- function() {
+  paths_list <- list(
+    base_url = "https://kwb-r.github.io/kwb.fisbroker/metadata_",
+    file_format = ".json",
+    atom = "<base_url>atom<file_format>",
+    wfs =  "<base_url>wfs<file_format>",
+    wms =  "<base_url>wms<file_format>"
+  )
+  
+  paths <- kwb.utils::resolve(paths_list)
+  
+  
+  meta_paths <- paths[names(paths) %in% c("atom", "wfs", "wms")]
+  
+  
+  stats::setNames(lapply(meta_paths, function(path) {
+    jsonlite::read_json(path, simplifyVector = TRUE) %>%
+      get_id()
+  }), names(meta_paths))
+  
+}
+
+write_wfs_as <- function(format = "nc", #use netCDF as default! 
+                         data_wfs,
+                         target_dir = tempdir(),
+                         dbg = TRUE) {
+  
+fs::dir_create(target_dir)
+
+lapply(seq_len(length(data_wfs)), function(i) {
+  id <- names(data_wfs)[i]
+  file <- sprintf("%s/%s.%s", fs::path_abs(target_dir), id, format)
+  kwb.utils::catAndRun(messageText = sprintf("Exporting (%d/%d): '%s' to '%s'",
+                       i, 
+                       length(data_wfs),
+                       id, 
+                       file),
+                       expr = {sf::st_write(data_wfs[[i]], file)},
+                       dbg = dbg)
+})
+}
+
+```
+
+## Metdata
+
+```{r read_metadata}
+meta <- get_metadata_from_ghpages()
+str(meta)
+
+overview <- kwb.fisbroker::get_dataset_overview()
+str(overview)
+
+### There are more "overview" identifiers than "ids/urls" (i.e. WFS files). T
+### Thus multiple identifiers use the same WFS
+### (limit to 2 categories: "Umweltbeobachtung" and "Umweltschutz")
+### if you want to import everything remove the "dplyr::filter" below
+meta_wfs <- meta$wfs %>%
+  dplyr::left_join(overview) %>%
+  dplyr::filter(.data$category_name %in% c("Umweltbeobachtung", "Umweltschutz"))
+str(meta_wfs)
+nrow(meta_wfs)
+
+urls <- unique(meta_wfs$url)[order(unique(meta_wfs$url))]
+
+length(urls)
+```
+
+## Multiple WFS Datasets
+
+The code below [reads](#read) (into R as `sf` object), [checks](#check) (the R 
+data structure) and [exports](#exports) (to `NetCDF`) `r length(urls)` WFS datasets 
+(out of in total `r nrow(meta_wfs)` available at [FIS-Broker](https://fbinter.stadt-berlin.de/fb/index.jsp).
+
+### Read 
+
+```{r multiple_wfs_read, eval = FALSE}
+system.time(data_wfs <- stats::setNames(lapply(urls, function(url) {
+  try(kwb.fisbroker::read_wfs(url = url))
+}), basename(urls))
+)
+```
+
+### Check
+
+data structure
+
+```{r multiple_wfs_check, eval = FALSE}
+str(data_wfs, 1)
+```
+
+### Export 
+
+```{r multiple_wfs_export, eval = FALSE}
+
+write_wfs_as(format = "shp", data_wfs = data_wfs)
+# Exporting (19/76): 's_04_08_1lniederschl_bl_8110' to 'C:/Users/mrustl/Documents/RProjects/kwb.fisbroker/vignettes/shapefiles/s_04_08_1lniederschl_bl_8110.shp' ... Warnung: Field names abbreviated for ESRI Shapefile driverWriting layer `s_04_08_1lniederschl_bl_8110' to data source 
+#   `C:/Users/mrustl/Documents/RProjects/kwb.fisbroker/vignettes/shapefiles/s_04_08_1lniederschl_bl_8110.shp' using driver `ESRI Shapefile'
+# Warnung: GDAL Message 6: Normalized/laundered field name: 'rgn_8110_ww_j' to 'rgn_8110_w'Warnung: GDAL Message 6: Normalized/laundered field name: 'rgn_8110_ww_s' to 'rgn_8110_1'Warnung: GDAL Message 6: Normalized/laundered field name: 'rgn_8110_ww_w' to 'rgn_8110_2'Writing 25352 features with 4 fields and geometry type Multi Polygon.
+# Unknown field name `rgn_8110_ww_j': updating a layer with improper field name(s)?
+# Error in CPL_write_ogr(obj, dsn, layer, driver, as.character(dataset_options), 
+
+exp_ds <- data_wfs[which(!sapply(data_wfs, kwb.utils::isTryError))]
+
+export_nc <- stats::setNames(lapply(seq_len(length(exp_ds)), function(i) { try(write_wfs_as(format = "nc", data_wfs = exp_ds[i], target_dir = "./netCDF"))}), names(exp_ds))
+
+```

@@ -6,6 +6,8 @@
 #' 2. Click on a WFS Dataset
 #' 3. Read the content of \code{Rechneraddresse} in the opened tab. The basename
 #' of the url is the required dataset id!
+#' @param url full url to computer adress ("Rechneradresse"), if NULL url will be 
+#' generated from dataset_id (default: NULL)
 #' @param service_version one of "1.0.0", "1.1.0" or "2.0.0" (default: "2.0.0")
 #' @param srs one of "EPSG:4258" or "EPSG:25833" (default: "EPSG:25833")
 #' @param encoding default: UTF-8
@@ -21,6 +23,7 @@
 #' berlin_bezirke <- kwb.fisbroker::read_wfs(dataset_id = "s_wfs_alkis_bezirk")
 read_wfs <- function(
     dataset_id = "s_wfs_alkis_bezirk",
+    url = NULL,
     service_version = "2.0.0",
     srs = "EPSG:25833",
     encoding = "UTF-8",
@@ -32,7 +35,18 @@ read_wfs <- function(
   stopifnot(service_version %in% c("1.0.0", "1.1.0", "2.0.0"))
   stopifnot(srs %in% paste0("EPSG:", c(25833, 4258)))
   
+  if(!is.null(url)) {
+    starts_with_wfs_base_url <- grepl(pattern = sprintf("^%s", urls$href_wfs_base),
+                                      x = url)
+    if(!starts_with_wfs_base_url) {
+     stop(sprintf("Provided url = '%s' does not start with FIS-Broker WFS base '%s'", 
+                  url, 
+                  urls$href_wfs_base))
+    }
+  }
+  
   service_type <- "WFS"
+  dataset_id <- ifelse(is.null(url), dataset_id, basename(url))
   
   msg <- sprintf(
     "Importing %s dataset_id '%s' from FIS-Broker",
@@ -42,8 +56,9 @@ read_wfs <- function(
   
   kwb.utils::catAndRun(messageText = msg, dbg = dbg, expr = {
     
-    full_url <- get_urls(
-      key. = "href_wfs", 
+    url <- get_urls(
+      key. = ifelse(is.null(url), "href_wfs_data", "href_wfs_url"),
+      url = url,
       id = dataset_id,
       query__wfs = utils::URLencode(to_query_string(
         service = service_type,
@@ -53,9 +68,10 @@ read_wfs <- function(
         srsName = srs
       ))
     )
+  
     
-    content <- httr_get_or_fail(full_url) %>%
-      httr::content(encoding = encoding)
+    content <- httr_get_or_fail(url) %>%
+      httr::content(encoding = encoding, options = "HUGE")
     
     temp_file <- write_temp_xml_file(content)
 

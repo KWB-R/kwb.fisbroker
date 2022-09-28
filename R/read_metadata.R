@@ -120,21 +120,9 @@ read_all_metadata <- function(
 #' @importFrom rvest read_html
 #' @export
 #' @examples
-#' ### One Dataset
 #' berlin_bezirke_metadata <- read_metadata(dataset_id = "s_wfs_alkis_bezirk")
 #' berlin_bezirke_metadata
 #' 
-#' ### Multiple
-#' ids_wfs <- readLines(system.file("extdata/ids_wfs.txt", 
-#' package = "kwb.fisbroker"))
-#' 
-#' wfs_meta_list <- setNames(lapply(ids_wfs, function(id) {
-#' kwb.fisbroker::read_metadata(id)}),
-#' ids_wfs)
-#' 
-#' wfs_meta <- dplyr::bind_rows(wfs_meta_list, .id = "id_wfs")
-#' 
-#' wfs_meta
 read_metadata <- function(
     dataset_id = "s_wfs_alkis_bezirk", 
     service_type = "WFS",
