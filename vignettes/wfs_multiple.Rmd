@@ -100,7 +100,7 @@ length(urls)
 
 The code below [reads](#read) (into R as `sf` object), [checks](#check) (the R 
 data structure) and [exports](#exports) (to `NetCDF`) `r length(urls)` WFS datasets 
-(out of in total `r nrow(meta$wfs)` available at [FIS-Broker](https://fbinter.stadt-berlin.de/fb/index.jsp).
+(out of in total `r nrow(meta_wfs)` available at [FIS-Broker](https://fbinter.stadt-berlin.de/fb/index.jsp).
 
 ### Read 
 
