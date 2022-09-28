@@ -91,7 +91,8 @@
 <span>  <span class="va">data</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.data</span><span class="op">$</span><span class="va">parameter</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Rechneradresse"</span>,</span>
 <span>                                         <span class="st">"ATOM-Feed-Url"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">.data</span><span class="op">$</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>url <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">value</span>, </span>
+<span>                  id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">.data</span><span class="op">$</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span></span>
@@ -144,28 +145,31 @@
 <code class="sourceCode R"><span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu">get_metadata_from_ghpages</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
-<span><span class="co">#&gt;  $ atom:'data.frame':    136 obs. of  5 variables:</span></span>
+<span><span class="co">#&gt;  $ atom:'data.frame':    136 obs. of  6 variables:</span></span>
 <span><span class="co">#&gt;   ..$ identifier: chr [1:136] "K.lod1@senstadt" "K.lod2@senstadt" "K.k_adressenberlin@senstadt" "K.AD_AdressenBerlin_K@senstadt" ...</span></span>
 <span><span class="co">#&gt;   ..$ section   : chr [1:136] "Technische Angaben" "Technische Angaben" "Technische Angaben" "Technische Angaben" ...</span></span>
 <span><span class="co">#&gt;   ..$ parameter : chr [1:136] "ATOM-Feed-Url" "ATOM-Feed-Url" "ATOM-Feed-Url" "ATOM-Feed-Url" ...</span></span>
 <span><span class="co">#&gt;   ..$ value     : chr [1:136] "https://fbinter.stadt-berlin.de/fb/feed/senstadt/a_lod1" "https://fbinter.stadt-berlin.de/fb/feed/senstadt/a_lod2" "https://fbinter.stadt-berlin.de/fb/feed/senstadt/a_adressenberlin" "https://fbinter.stadt-berlin.de/fb/feed/senstadt/a_AD_AdressenBerlin" ...</span></span>
+<span><span class="co">#&gt;   ..$ url       : chr [1:136] "https://fbinter.stadt-berlin.de/fb/feed/senstadt/a_lod1" "https://fbinter.stadt-berlin.de/fb/feed/senstadt/a_lod2" "https://fbinter.stadt-berlin.de/fb/feed/senstadt/a_adressenberlin" "https://fbinter.stadt-berlin.de/fb/feed/senstadt/a_AD_AdressenBerlin" ...</span></span>
 <span><span class="co">#&gt;   ..$ id        : chr [1:136] "a_lod1" "a_lod2" "a_adressenberlin" "a_AD_AdressenBerlin" ...</span></span>
-<span><span class="co">#&gt;  $ wfs :'data.frame':    403 obs. of  5 variables:</span></span>
+<span><span class="co">#&gt;  $ wfs :'data.frame':    403 obs. of  6 variables:</span></span>
 <span><span class="co">#&gt;   ..$ identifier: chr [1:403] "K.k_adressenberlin@senstadt" "K.k_rbs_adr@senstadt" "K.k_alkis_bezirke@senstadt" "K.k_alkis_flurstuecke@senstadt" ...</span></span>
 <span><span class="co">#&gt;   ..$ section   : chr [1:403] "Technische Angaben" "Technische Angaben" "Technische Angaben" "Technische Angaben" ...</span></span>
 <span><span class="co">#&gt;   ..$ parameter : chr [1:403] "Rechneradresse" "Rechneradresse" "Rechneradresse" "Rechneradresse" ...</span></span>
 <span><span class="co">#&gt;   ..$ value     : chr [1:403] "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s_wfs_adressenberlin" "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s_rbs_adr" "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s_wfs_alkis_bezirk" "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s_wfs_alkis" ...</span></span>
+<span><span class="co">#&gt;   ..$ url       : chr [1:403] "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s_wfs_adressenberlin" "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s_rbs_adr" "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s_wfs_alkis_bezirk" "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s_wfs_alkis" ...</span></span>
 <span><span class="co">#&gt;   ..$ id        : chr [1:403] "s_wfs_adressenberlin" "s_rbs_adr" "s_wfs_alkis_bezirk" "s_wfs_alkis" ...</span></span>
-<span><span class="co">#&gt;  $ wms :'data.frame':    509 obs. of  5 variables:</span></span>
+<span><span class="co">#&gt;  $ wms :'data.frame':    509 obs. of  6 variables:</span></span>
 <span><span class="co">#&gt;   ..$ identifier: chr [1:509] "K.k_adressenberlin@senstadt" "K.AD_AdressenBerlin_K@senstadt" "K.k_rbs_adr@senstadt" "K.wmsk_afis@senstadt" ...</span></span>
 <span><span class="co">#&gt;   ..$ section   : chr [1:509] "Technische Angaben" "Technische Angaben" "Technische Angaben" "Technische Angaben" ...</span></span>
 <span><span class="co">#&gt;   ..$ parameter : chr [1:509] "Rechneradresse" "Rechneradresse" "Rechneradresse" "Rechneradresse" ...</span></span>
 <span><span class="co">#&gt;   ..$ value     : chr [1:509] "https://fbinter.stadt-berlin.de/fb/wms/senstadt/k_adressenberlin" "https://fbinter.stadt-berlin.de/fb/wms/senstadt/AD_AdressenBerlin_K" "https://fbinter.stadt-berlin.de/fb/wms/senstadt/k_rbs_adr" "https://fbinter.stadt-berlin.de/fb/wms/senstadt/wmsk_afis" ...</span></span>
+<span><span class="co">#&gt;   ..$ url       : chr [1:509] "https://fbinter.stadt-berlin.de/fb/wms/senstadt/k_adressenberlin" "https://fbinter.stadt-berlin.de/fb/wms/senstadt/AD_AdressenBerlin_K" "https://fbinter.stadt-berlin.de/fb/wms/senstadt/k_rbs_adr" "https://fbinter.stadt-berlin.de/fb/wms/senstadt/wmsk_afis" ...</span></span>
 <span><span class="co">#&gt;   ..$ id        : chr [1:509] "k_adressenberlin" "AD_AdressenBerlin_K" "k_rbs_adr" "wmsk_afis" ...</span></span>
 <span></span>
 <span><span class="va">overview</span> <span class="op">&lt;-</span> <span class="fu">kwb.fisbroker</span><span class="fu">::</span><span class="fu"><a href="../reference/get_dataset_overview.html">get_dataset_overview</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Login to FIS-Broker ... ok. (2.74s) </span></span>
-<span><span class="co">#&gt; Getting HTML text from 'https://fbinter.stadt-be...d=navigationFrameResult' ... ok. (1.98s)</span></span>
+<span><span class="co">#&gt; Login to FIS-Broker ... ok. (2.35s) </span></span>
+<span><span class="co">#&gt; Getting HTML text from 'https://fbinter.stadt-be...d=navigationFrameResult' ... ok. (1.60s)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">overview</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    1840 obs. of  7 variables:</span></span>
 <span><span class="co">#&gt;  $ category_id  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
@@ -175,21 +179,23 @@
 <span><span class="co">#&gt;  $ cmd          : Factor w/ 2 levels "navigationShowResult",..: 1 2 1 2 1 2 2 2 1 2 ...</span></span>
 <span><span class="co">#&gt;  $ type         : Factor w/ 4 levels "","ATOM","WMS",..: 1 2 1 2 1 3 4 2 1 3 ...</span></span>
 <span><span class="co">#&gt;  $ identifier   : chr  "K.lod1%40senstadt" "K.lod1@senstadt" "K.lod2%40senstadt" "K.lod2@senstadt" ...</span></span>
-<span><span class="co">#&gt;  - attr(*, "session_id")= chr "143B01E4D21BF26FDCE97795FDC1AA58"</span></span>
+<span><span class="co">#&gt;  - attr(*, "session_id")= chr "F8E155FC8414F5AE5FF6D97EFB524277"</span></span>
 <span></span>
-<span><span class="co">### There are more "overview" identifiers than "ids" (i.e. WFS files). Thus multiple</span></span>
-<span><span class="co">### identifiers use the same WFS</span></span>
+<span><span class="co">### There are more "overview" identifiers than "ids/urls" (i.e. WFS files). T</span></span>
+<span><span class="co">### Thus multiple identifiers use the same WFS</span></span>
 <span><span class="co">### (limit to 2 categories: "Umweltbeobachtung" and "Umweltschutz")</span></span>
+<span><span class="co">### if you want to import everything remove the "dplyr::filter" below</span></span>
 <span><span class="va">meta_wfs</span> <span class="op">&lt;-</span> <span class="va">meta</span><span class="op">$</span><span class="va">wfs</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">overview</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">category_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Umweltbeobachtung"</span>, <span class="st">"Umweltschutz"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.data</span><span class="op">$</span><span class="va">category_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Umweltbeobachtung"</span>, <span class="st">"Umweltschutz"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Joining, by = "identifier"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">meta_wfs</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    214 obs. of  11 variables:</span></span>
+<span><span class="co">#&gt; 'data.frame':    214 obs. of  12 variables:</span></span>
 <span><span class="co">#&gt;  $ identifier   : chr  "K.k08_07_2tehganlagen@senstadt" "K.k08_07_2tehganlagen@senstadt" "K.wmsk_03_12_2emissionen@senstadt" "K.wmsk_03_12_2emissionen@senstadt" ...</span></span>
 <span><span class="co">#&gt;  $ section      : chr  "Technische Angaben" "Technische Angaben" "Technische Angaben" "Technische Angaben" ...</span></span>
 <span><span class="co">#&gt;  $ parameter    : chr  "Rechneradresse" "Rechneradresse" "Rechneradresse" "Rechneradresse" ...</span></span>
 <span><span class="co">#&gt;  $ value        : chr  "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s08_07_2tehganlagen" "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s08_07_2tehganlagen" "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s03_12_2emissionen" "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s03_12_2emissionen" ...</span></span>
+<span><span class="co">#&gt;  $ url          : chr  "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s08_07_2tehganlagen" "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s08_07_2tehganlagen" "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s03_12_2emissionen" "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s03_12_2emissionen" ...</span></span>
 <span><span class="co">#&gt;  $ id           : chr  "s08_07_2tehganlagen" "s08_07_2tehganlagen" "s03_12_2emissionen" "s03_12_2emissionen" ...</span></span>
 <span><span class="co">#&gt;  $ category_id  : int  7 7 7 7 7 7 7 7 7 7 ...</span></span>
 <span><span class="co">#&gt;  $ category_name: Factor w/ 9 levels "Basisdaten/Luftbilder",..: 7 7 7 7 7 7 7 7 7 7 ...</span></span>
@@ -200,20 +206,23 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">meta_wfs</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 214</span></span>
 <span></span>
-<span><span class="va">ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">meta_wfs</span><span class="op">$</span><span class="va">id</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">meta_wfs</span><span class="op">$</span><span class="va">id</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">ids</span><span class="op">)</span></span>
+<span><span class="va">urls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">meta_wfs</span><span class="op">$</span><span class="va">url</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">meta_wfs</span><span class="op">$</span><span class="va">url</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">urls</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 76</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="multiple-wfs-datasets">Multiple WFS Datasets<a class="anchor" aria-label="anchor" href="#multiple-wfs-datasets"></a>
 </h2>
+<p>The code below <a href="#read">reads</a> (into R as <code>sf</code> object), <a href="#check">checks</a> (the R data structure) and <a href="#exports">exports</a> (to <code>NetCDF</code>) 76 WFS datasets (out of in total 403 available at <a href="https://fbinter.stadt-berlin.de/fb/index.jsp" class="external-link">FIS-Broker</a>.</p>
 <div class="section level3">
 <h3 id="read">Read<a class="anchor" aria-label="anchor" href="#read"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_wfs</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">ids</span>, <span class="kw">function</span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">kwb.fisbroker</span><span class="fu">::</span><span class="fu"><a href="../reference/read_wfs.html">read_wfs</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">id</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span>, <span class="va">ids</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">data_wfs</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">urls</span>, <span class="kw">function</span><span class="op">(</span><span class="va">url</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">kwb.fisbroker</span><span class="fu">::</span><span class="fu"><a href="../reference/read_wfs.html">read_wfs</a></span><span class="op">(</span>url <span class="op">=</span> <span class="va">url</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">urls</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="check">Check<a class="anchor" aria-label="anchor" href="#check"></a>
@@ -234,7 +243,9 @@
 <span><span class="co"># Unknown field name `rgn_8110_ww_j': updating a layer with improper field name(s)?</span></span>
 <span><span class="co"># Error in CPL_write_ogr(obj, dsn, layer, driver, as.character(dataset_options), </span></span>
 <span></span>
-<span><span class="fu">write_wfs_as</span><span class="op">(</span>format <span class="op">=</span> <span class="st">"nc"</span>, data_wfs <span class="op">=</span> <span class="va">data_wfs</span>, target_dir <span class="op">=</span> <span class="st">"./netCDF"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">exp_ds</span> <span class="op">&lt;-</span> <span class="va">data_wfs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data_wfs</span>, <span class="fu">kwb.utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/kwb.utils/man/isTryError.html" class="external-link">isTryError</a></span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">export_nc</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">exp_ds</span><span class="op">)</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">write_wfs_as</span><span class="op">(</span>format <span class="op">=</span> <span class="st">"nc"</span>, data_wfs <span class="op">=</span> <span class="va">exp_ds</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, target_dir <span class="op">=</span> <span class="st">"./netCDF"</span><span class="op">)</span><span class="op">)</span><span class="op">}</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">exp_ds</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
