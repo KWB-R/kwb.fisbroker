@@ -87,7 +87,7 @@ str(overview)
 ### if you want to import everything remove the "dplyr::filter" below
 meta_wfs <- meta$wfs %>%
   dplyr::left_join(overview) #%>%
-  dplyr::filter(category_name %in% c("Umweltbeobachtung", "Umweltschutz"))
+  dplyr::filter(.data$category_name %in% c("Umweltbeobachtung", "Umweltschutz"))
 str(meta_wfs)
 nrow(meta_wfs)
 
